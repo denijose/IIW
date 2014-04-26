@@ -5,8 +5,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<script>
+	function dj1(){
+		document.location.href='/IIW2/WrapperTest';
+	}
+</script>
 </head>
-<body>
+<body onload="dj1()">
 <%= "Test" %>
 </body>
 </html>

@@ -12,6 +12,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.iiw.rdf.Manage;
+
 /**
  * Servlet implementation class WrapperTest
  */
@@ -27,6 +29,7 @@ public class WrapperTest extends HttpServlet {
     }
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
     	System.out.println("Received Request");
     	Document website = Jsoup.connect("http://www.edulix.com/unisearch/univreview.php?stid=36&univid=153").get();
     	//Elements selection = website.select("body");
@@ -82,6 +85,7 @@ public class WrapperTest extends HttpServlet {
     	for (Element e : selection) {
     		System.out.println(e.attr("href")+", "+e.text()+", "+e);
     	}*/
+
     }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
