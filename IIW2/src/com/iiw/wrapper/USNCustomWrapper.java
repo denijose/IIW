@@ -7,15 +7,14 @@ import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class USNCustomWrapper {
 	
 	public USNCustomWrapper() throws IOException {
-		for (int i = 1; i<=1;i++) {
-			//System.out.println("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/top-engineering-schools/eng-rankings/page+"+i);
-			getOptions("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/search?program=top-business-schools#search?spp=10&program=top-business-schools&specialty=&name=&zip=&program_rank=ranked&enrollment-min=0&enrollment-max=1000&tuition_and_fees-min=5000&tuition_and_fees-max=20000&sort=program_rank&sortdir=desc");
-		}
+			// Initialize all the categories and specialities
+			getOptions("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/search?spp=10&program=");
 	}
 	
 	public void getOptions(String url) throws IOException {
@@ -23,8 +22,28 @@ public class USNCustomWrapper {
 		Elements categoriesList = website.select(".t-small");
 		Elements categories = categoriesList.select("option");
 		categories.remove(0);
-		System.out.println(categories);
+		for (Element c : categories) {
+			System.out.println(c.attr("value")+"\t"+c.text());
+			getSpecialities(url+c.attr("value"));
+		}
 		//System.out.println(categories.attr("value")+"\t"+categories.text()+"\n");
+	}
+	
+	public void getSpecialities(String url) throws IOException {
+		Document website = Jsoup.connect(url).get();
+		//System.out.println("Specialities of "+url);
+		Elements specialitiesList = website.select("#gradSearchSpecialty");
+		Elements specialities = specialitiesList.select("option");
+		//System.out.println(specialitiesList);
+		
+		// Remove "Any Speciality" option
+		if (specialities.size() != 0) {
+			specialities.remove(0);
+		}
+		
+		for (Element s : specialities) {
+			System.out.println("\t"+s.attr("value")+"\t"+s.text());
+		}
 	}
 	
 	public void wrap(String url) throws IOException {
