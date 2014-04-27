@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>IIW2</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
@@ -28,5 +28,15 @@
   <servlet-mapping>
     <servlet-name>WrapperTest</servlet-name>
     <url-pattern>/WrapperTest</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>USNWrapper</display-name>
+    <servlet-name>USNWrapper</servlet-name>
+    <servlet-class>com.iiw.controller.USNWrapper</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>USNWrapper</servlet-name>
+    <url-pattern>/USNWrapper</url-pattern>
   </servlet-mapping>
 </web-app>
