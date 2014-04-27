@@ -16,14 +16,14 @@ public class Admin {
 
 	private static Set<University> getUniversitiesFromFile() throws IOException{
 		Set<University> universitySet = new HashSet<University>();
-		File file = new File("C:/D Drive/KNOWLEDGE IS POWER/IIW/Project");
+		File file = new File("C:\\D Drive\\KNOWLEDGE IS POWER\\IIW\\Project\\Universities.csv");
 		BufferedReader br = new BufferedReader(new FileReader(file));
 		String line = new String();
 		while((line=br.readLine())!=null){
 			String[] tokens = line.split(",");
 			String univURI = "http://www.edulix.com/unisearch/" + tokens[0];
 			String univName = tokens[1];
-			universitySet.add(new University(univURI,univName,null,null,null,null,null));
+			//universitySet.add(new University(univURI,univName,null,null,null,null,null));
 		}
 		br.close();
 		return universitySet;
@@ -31,8 +31,10 @@ public class Admin {
 	
 	public static void createUniversities() throws IOException, RepositoryException{
 		Set<University> universitySet = getUniversitiesFromFile();
-		for(University u : universitySet)
-			Manage.createUniversity(u);		
+		for(University u : universitySet){
+			//Manage.createUniversity(u);	
+			System.out.println(u.getURI()+ u.getName());
+		}
 	}
 	
 	

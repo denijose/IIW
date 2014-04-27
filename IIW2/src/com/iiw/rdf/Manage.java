@@ -35,7 +35,9 @@ public class Manage {
 //	    con.close();
 	}
 	
-	public static void create() throws RepositoryException{				
+	public static void create() throws RepositoryException{			
+		repo = new HTTPRepository(sesameServer, repositoryID);
+		repo.initialize();	
 		ValueFactory f = repo.getValueFactory();
 		URI alice = f.createURI("http://example.org/people/alice");
 		URI bob = f.createURI("http://example.org/people/bob");
@@ -74,7 +76,7 @@ public class Manage {
 	}
 	
 	public static void createUniversity(University univ) throws RepositoryException{
-		Repository repo = new HTTPRepository(sesameServer, repositoryID);
+		repo = new HTTPRepository(sesameServer, repositoryID);
 		repo.initialize();		
 		
 		ValueFactory f = repo.getValueFactory();		
