@@ -17,6 +17,8 @@ public class University {
 	
 	private Boolean isFunded;
 	
+	public University(){}
+	
 	public University(String URI, String name, String country, String city, String state, int rank,
 			int feesInstate, int feesOutState, int enrollments , boolean isFunded){
 		this.URI = URI;

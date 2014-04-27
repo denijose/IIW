@@ -9,6 +9,8 @@ public class Student {
 	private Integer greScore;
 	private Integer toeflScore;
 	
+	public Student(){}
+	
 	public Student(String URI,String name, Integer age, String stream, Integer greScore,
 			Integer toeflScore) {
 		super();
