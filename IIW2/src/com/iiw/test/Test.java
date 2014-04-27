@@ -16,7 +16,7 @@ public class Test {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws RepositoryException, IOException {
-		Admin.createUniversities();
+		Manage.create();
 		//Manage.createUniversity(new University("http://www.edulix.com/unisearch/univreview.php?stid=36&univid=37","Alliant International University",null,null,null,null,null));
 
 	}
