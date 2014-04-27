@@ -1,5 +1,7 @@
 package com.iiw.rdf;
 
+import java.util.Set;
+
 import org.openrdf.model.Literal;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
@@ -11,6 +13,7 @@ import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.RepositoryResult;
 import org.openrdf.repository.http.HTTPRepository;
 
+import com.iiw.entities.Category;
 import com.iiw.entities.Student;
 import com.iiw.entities.University;
 
@@ -106,4 +109,48 @@ public class Manage {
 	    con.add(studentURI, name, sName);	    
 	    con.close();
 	}
+	
+	public static void createCategory(Category c) throws RepositoryException{
+		Repository repo = new HTTPRepository(sesameServer, repositoryID);
+		repo.initialize();		
+		
+		ValueFactory f = repo.getValueFactory();	
+		URI categoryClass = f.createURI("http://example.org/category");
+		URI categoryURI = f.createURI(c.getURI());
+		URI name = f.createURI("http://dbpedia.org/property/name");
+		Literal cName = f.createLiteral(c.getName());	
+		
+		RepositoryConnection con = repo.getConnection();		
+		con.add(categoryURI, RDF.TYPE, categoryClass);
+	    con.add(categoryURI, name, cName);	    
+	    con.close();
+	} 
+	
+	public static void createCategoryAndSubCategories(Category c, Set<Category> subCategories) throws RepositoryException{
+		Repository repo = new HTTPRepository(sesameServer, repositoryID);
+		repo.initialize();
+		ValueFactory f = repo.getValueFactory();	
+		URI categoryClass = f.createURI("http://example.org/category");
+		URI categoryURI = f.createURI(c.getURI());
+		URI name = f.createURI("http://dbpedia.org/property/name");
+		URI hasSubCategoryProperty = f.createURI("http://example.org/hasSubCategory");
+		Literal cName = f.createLiteral(c.getName());	
+		RepositoryConnection con = repo.getConnection();		
+		con.add(categoryURI, RDF.TYPE, categoryClass);
+	    con.add(categoryURI, name, cName);	 
+	    
+	    for(Category subCategory : subCategories){
+	    	URI subCategoryURI = f.createURI(subCategory.getURI());
+	    	Literal subCategoryName = f.createLiteral(subCategory.getName());	
+	    	con.add(subCategoryURI, RDF.TYPE, categoryClass);
+	    	con.add(subCategoryURI, name, subCategoryName);	 
+	    	con.add(categoryURI, hasSubCategoryProperty, subCategoryURI);	    	
+	    }
+		
+	}
+	
+	
+	
 }
+
+	
