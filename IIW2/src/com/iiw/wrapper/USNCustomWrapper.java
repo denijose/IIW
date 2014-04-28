@@ -2,6 +2,7 @@ package com.iiw.wrapper;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,7 +20,7 @@ public class USNCustomWrapper {
 	
 	public USNCustomWrapper() throws IOException {
 			// Initialize all the categories and specialities
-			getOptions("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/search?spp=10&program=");
+			getOptions("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/search?spp=50&program=");
 	}
 	
 	public void getOptions(String url) throws IOException {
@@ -29,7 +30,7 @@ public class USNCustomWrapper {
 		categories.remove(0);
 		for (Element c : categories) {
 			System.out.println(c.attr("value")+"\t"+c.text());
-			Category cat = new Category(c.attr("value"),c.text());
+			Category cat = new Category(url+c.attr("value"),c.text());
 			Set<Category> subCats = getSpecialities(url+c.attr("value"));
 			try {
 				Manage.createCategoryAndSubCategories(cat, subCats);
@@ -46,7 +47,7 @@ public class USNCustomWrapper {
 		Elements specialitiesList = website.select("#gradSearchSpecialty");
 		Elements specialities = specialitiesList.select("option");
 		//System.out.println(specialitiesList);
-		Set<Category> subCats = null;
+		Set<Category> subCats = new HashSet<Category>();
 		// Remove "Any Speciality" option
 		if (specialities.size() != 0) {
 			specialities.remove(0);
@@ -54,7 +55,7 @@ public class USNCustomWrapper {
 		
 		for (Element s : specialities) {
 			System.out.println("\t"+s.attr("value")+"\t"+s.text());
-			Category cat = new Category(s.attr("value"),s.text());
+			Category cat = new Category(url+"&specialty="+s.attr("value"),s.text());
 			subCats.add(cat);
 		}
 		return subCats;
