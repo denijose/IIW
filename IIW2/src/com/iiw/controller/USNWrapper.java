@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.openrdf.repository.RepositoryException;
+
 import com.iiw.wrapper.USNCustomWrapper;
 import com.iiw.wrapper.USNewsWrapper;
 
@@ -17,7 +19,7 @@ public class USNWrapper extends HttpServlet {
         super();
     }
 
-    public void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	System.out.println("Received request from "+request.getContextPath());
     	//new USNewsWrapper();
     	new USNCustomWrapper();

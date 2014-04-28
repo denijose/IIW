@@ -2,6 +2,7 @@ package com.iiw.wrapper;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,6 +10,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openrdf.repository.RepositoryException;
+
+import com.iiw.entities.*;
+import com.iiw.rdf.*;
 
 public class USNCustomWrapper {
 	
@@ -24,18 +29,24 @@ public class USNCustomWrapper {
 		categories.remove(0);
 		for (Element c : categories) {
 			System.out.println(c.attr("value")+"\t"+c.text());
-			getSpecialities(url+c.attr("value"));
+			Category cat = new Category(c.attr("value"),c.text());
+			Set<Category> subCats = getSpecialities(url+c.attr("value"));
+			try {
+				Manage.createCategoryAndSubCategories(cat, subCats);
+			} catch (RepositoryException re) {
+				System.out.println("Exception: RDF didn't like us.\n\n"+re.toString());
+			}
 		}
 		//System.out.println(categories.attr("value")+"\t"+categories.text()+"\n");
 	}
 	
-	public void getSpecialities(String url) throws IOException {
+	public Set<Category> getSpecialities(String url) throws IOException {
 		Document website = Jsoup.connect(url).get();
 		//System.out.println("Specialities of "+url);
 		Elements specialitiesList = website.select("#gradSearchSpecialty");
 		Elements specialities = specialitiesList.select("option");
 		//System.out.println(specialitiesList);
-		
+		Set<Category> subCats = null;
 		// Remove "Any Speciality" option
 		if (specialities.size() != 0) {
 			specialities.remove(0);
@@ -43,7 +54,10 @@ public class USNCustomWrapper {
 		
 		for (Element s : specialities) {
 			System.out.println("\t"+s.attr("value")+"\t"+s.text());
+			Category cat = new Category(s.attr("value"),s.text());
+			subCats.add(cat);
 		}
+		return subCats;
 	}
 	
 	public void wrap(String url) throws IOException {
