@@ -20,7 +20,7 @@ public class USNCustomWrapper {
 	
 	public USNCustomWrapper() throws IOException {
 			// Initialize all the categories and specialities
-			getOptions("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/search?spp=50&program=");
+			//getOptions("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/search?spp=50&program=");
 	}
 	
 	public void getOptions(String url) throws IOException {
@@ -62,41 +62,70 @@ public class USNCustomWrapper {
 	}
 	
 	public void wrap(String url) throws IOException {
+		do {
 		Document website = Jsoup.connect(url).get();
-		//Document website = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
-    	Elements ranks = website.select(".rankscore-bronze");
-    	Elements schools = website.select(".school-name");
-    	Elements locations = website.select(".location");
-    	Elements costs = website.select(".search_tuition");
-    	Elements enrolleds = website.select(".total_enrolled");
+			
+		Elements column0 = website.select(".col0");
+    	Elements column1 = website.select(".col1");
+    	Elements column2 = website.select(".col2");
+    	Elements column3 = website.select(".col3");
     	
     	// Removing the table titles
-    	//System.out.println(costs.get(0));
-    	costs.remove(0);
-    	//System.out.println(enrolleds.get(0));
-    	enrolleds.remove(0);
+    	if (column0.size()>0) column0.remove(0);
+    	if (column1.size()>0) column1.remove(0);
+    	if (column2.size()>0) column2.remove(0);
+    	if (column3.size()>0) column3.remove(0);
     	
-    	// The number of rows per page
-    	//System.out.println(ranks.size()+" "+schools.size()+" "+locations.size()+" "+costs.size()+" "+enrolleds.size());
-    	
-    	String costsString = null;
-    	Pattern pattern = Pattern.compile("(\\d+),(\\d+)");
+    	String schoolURI,schoolName,cityState[],location,rankString,costString;
+    	int rank,enrollments;
+    	int[] feeInOut = {-1,-1};
+    	//Pattern pattern = Pattern.compile("(\\d+),(\\d+)");
+    	Pattern pattern = Pattern.compile("\\$(\\d+,*\\d+)");
     	Matcher matcher;
-    	int[] tuitionValues = {0,0}; 
-    	for (int i = 0; i < ranks.size();i++){
-    		// <span class="rankscore-bronze"> <span title="Overall Score: 56 out of 100.">#25</span> </span>
-    		// <a class="school-name" href="/best-graduate-schools/top-engineering-schools/college-of-engineering-02155">Pennsylvania State University—?University Park</a>
-    		// <td class="column-odd table-column-odd  search_tuition  "> $19,304 <span class="rankings-costInfo">per year (in-state, full-time)</span>; $32,416 <span class="rankings-costInfo">per year (out-of-state, full-time)</span> <span class="footnote"> <a style="cursor: help" href=""> <sup></sup> </a> </span> </td>
-    		costsString = costs.get(i).text();
-    		matcher = pattern.matcher(costsString);
-    		int index = 0;
-    		while (matcher.find()) {
-    			tuitionValues[index++] = Integer.parseInt(matcher.group(1)+matcher.group(2));
+    	
+    	for (int i = 0; i < column0.size(); i++) {
+    		feeInOut[0] = feeInOut[1] = -1;
+    		schoolURI = column0.get(i).select(".schoolname").attr("href");
+    		schoolName = column0.get(i).select(".schoolname").text();
+        	location = column0.get(i).select(".citystate").text();
+        	cityState = location.split(", ");  // splitting city and state
+        	rankString = column1.get(i).text(); // #21 or Unranked or ...
+        	costString = column3.get(i).text(); //$11,220 per year (in-state, full-time); $26,322 per year (out-of-state, full-time)
+        	
+        	try {
+        		enrollments = Integer.parseInt(column2.get(i).text().replaceAll(",","")); //3,623 --> 3623
+        	} catch (NumberFormatException nfe) {
+        		enrollments = -1;
+        	}
+        	
+    		try {
+    			rank = Integer.parseInt(rankString.replaceAll("#", ""));
+    		} catch (NumberFormatException nfe) {
+    			rank = -1;
     		}
     		
-    		System.out.println(ranks.get(i).text().replaceAll("#", "") +"\t"+ schools.get(i).attr("href") +"\t"+ schools.get(i).text().replaceAll("\u200B","").replaceAll("\u2014"," - ") +"\t"+ 
-    		                   locations.get(i).text().replaceAll(", ","\t") +"\t"+ tuitionValues[0] +"\t"+ tuitionValues[1] +"\t"+ enrolleds.get(i).text().replaceAll(",",""));
+    		//Extracting the currency
+    		matcher = pattern.matcher(costString);
+    		int index = 0;
+    		while (matcher.find()) {
+    			feeInOut[index++]=Integer.parseInt(matcher.group(1).replaceAll(",",""));
+    		}
+    		
+    		System.out.println(schoolURI+"\t"+schoolName+"\t"+cityState[0]+"\t"+cityState[1]+"\t"+rank+"\t"+enrollments+"\t"+feeInOut[0]+"\t"+feeInOut[1]);
     	}
+    	
+    	Element last = website.select(".pager_link").last();
+    	
+    	if (last.text().equals(">")) {  // If there is a next page link, set it as the new url 
+    		url = "http://grad-schools.usnews.rankingsandreviews.com"+last.attr("href");
+    		//System.out.println("new url is "+url);
+    	} else {
+    		url = null;
+    		//System.out.println("new url is "+url);
+    	}
+		}
+    	while(url!=null);
+    	
 	}
 
 }

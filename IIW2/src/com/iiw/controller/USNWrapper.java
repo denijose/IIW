@@ -22,7 +22,10 @@ public class USNWrapper extends HttpServlet {
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	System.out.println("Received request from "+request.getContextPath());
     	//new USNewsWrapper();
-    	new USNCustomWrapper();
+    	USNCustomWrapper usncw = new USNCustomWrapper();
+    	usncw.wrap("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/search?spp=10&program=top-computer-science-schools&specialty=&name=&zip=&program_rank=Any&sort=&sortdir=");
+    	//usncw.wrap("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/search?sort=c_rank_final_overall_sort&sortdir=asc&spp=50&program=top-engineering-schools&page=3");
+    	//usncw.wrap("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/search?spp=50&program=top-engineering-schools&sort=program_rank&sortdir=asc");
     }
 
 
