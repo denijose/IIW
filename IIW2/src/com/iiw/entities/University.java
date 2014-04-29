@@ -10,26 +10,25 @@ public class University {
 	private String state;
 	private String acceptanceLevel;
 	
-	private int rank;
-	private int feesInstate;
-	private int feesOutState;
-	private int enrollments;
+	
 	
 	private Boolean isFunded;
 	
-	public University(){}
+	public University(){
+		this.URI = null;
+		this.name = null;
+		this.country = null;
+		this.city = null;
+		this.state = null;		
+		this.isFunded = null;
+	}
 	
-	public University(String URI, String name, String country, String city, String state, int rank,
-			int feesInstate, int feesOutState, int enrollments , boolean isFunded){
+	public University(String URI, String name, String country, String city, String state, boolean isFunded){
 		this.URI = URI;
 		this.name = name;
 		this.country = country;
 		this.city = city;
-		this.state = state;
-		this.rank = rank;
-		this.feesInstate = feesInstate;
-		this.feesOutState = feesOutState;
-		this.enrollments = enrollments;		
+		this.state = state;		
 		this.isFunded = isFunded;
 	}
 	
@@ -47,9 +46,6 @@ public class University {
 		this.city = city;
 		this.state = state;
 		this.type = type;
-		this.feesInstate = feesInstate;
-		this.feesOutState = feesOutState;
-		this.enrollments = enrollments;
 		this.isFunded = isFunded;
 		this.acceptanceLevel = acceptanceLevel;
 	}	
@@ -108,38 +104,6 @@ public class University {
 
 	public void setAcceptanceLevel(String acceptanceLevel) {
 		this.acceptanceLevel = acceptanceLevel;
-	}
-
-	public int getRank() {
-		return rank;
-	}
-
-	public void setRank(int rank) {
-		this.rank = rank;
-	}
-
-	public int getFeesInstate() {
-		return feesInstate;
-	}
-
-	public void setFeesInstate(int feesInstate) {
-		this.feesInstate = feesInstate;
-	}
-
-	public int getFeesOutState() {
-		return feesOutState;
-	}
-
-	public void setFeesOutState(int feesOutState) {
-		this.feesOutState = feesOutState;
-	}
-
-	public int getEnrollments() {
-		return enrollments;
-	}
-
-	public void setEnrollments(int enrollments) {
-		this.enrollments = enrollments;
 	}
 
 	public Boolean getIsFunded() {

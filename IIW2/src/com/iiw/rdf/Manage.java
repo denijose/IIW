@@ -13,9 +13,8 @@ import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.RepositoryResult;
 import org.openrdf.repository.http.HTTPRepository;
 
-import com.iiw.entities.Category;
-import com.iiw.entities.Student;
-import com.iiw.entities.University;
+import com.iiw.entities.*;
+
 
 
 public class Manage {
@@ -133,7 +132,7 @@ public class Manage {
 		URI categoryClass = f.createURI("http://example.org/category");
 		URI categoryURI = f.createURI(c.getURI());
 		URI name = f.createURI("http://dbpedia.org/property/name");
-		URI hasSubCategoryProperty = f.createURI("http://example.org/hasSubCategory");
+		URI hasSubCategory = f.createURI("http://example.org/hasSubCategory");
 		Literal cName = f.createLiteral(c.getName());	
 		RepositoryConnection con = repo.getConnection();		
 		con.add(categoryURI, RDF.TYPE, categoryClass);
@@ -144,9 +143,79 @@ public class Manage {
 	    	Literal subCategoryName = f.createLiteral(subCategory.getName());	
 	    	con.add(subCategoryURI, RDF.TYPE, categoryClass);
 	    	con.add(subCategoryURI, name, subCategoryName);	 
-	    	con.add(categoryURI, hasSubCategoryProperty, subCategoryURI);	    	
+	    	con.add(categoryURI, hasSubCategory, subCategoryURI);	    	
 	    }
-		
+	}
+	    
+	 public static void createUnivCourseConnections(University univ, Course course, Category category, Course subCourse, Category subCategory) throws RepositoryException{
+			Repository repo = new HTTPRepository(sesameServer, repositoryID);
+			repo.initialize();
+			ValueFactory f = repo.getValueFactory();
+			RepositoryConnection con = repo.getConnection();	
+			
+			URI univURI = f.createURI(univ.getURI());
+			URI categoryURI = f.createURI(category.getURI());
+			URI subCategoryURI = f.createURI(subCategory.getURI());
+			URI name = f.createURI("http://dbpedia.org/property/name");			
+			URI hasCourse = f.createURI("http://example.org/hasCourse"); 
+			URI hasSubCourse = f.createURI("http://example.org/hasSubCourse"); 
+			URI hasRank = f.createURI("http://example.org/hasCategory");
+			URI hasFeesInstate = f.createURI("http://example.org/hasFeesInstate");
+			URI hasFeesOutState = f.createURI("http://example.org/hasFeesOutState"); 
+			URI hasEnrollments = f.createURI("http://example.org/hasEnrollments"); 	
+			
+			//create the main course			
+			URI courseURI = f.createURI(course.getURI());
+			Literal courseName = f.createLiteral(course.getName());
+			con.add(courseURI, RDF.TYPE, categoryURI);
+			con.add(courseURI, name, courseName);			
+			if(course.getRank()!=-1){
+				Literal courseRank = f.createLiteral(course.getRank());
+				con.add(courseURI, hasRank, courseRank);
+			}
+			if(course.getFeesInstate()!=-1){
+				Literal courseFeesInstate = f.createLiteral(course.getFeesInstate());
+				con.add(courseURI, hasFeesInstate, courseFeesInstate);
+			}
+			if(course.getFeesOutState()!=-1){
+				Literal courseFeesOutState = f.createLiteral(course.getFeesOutState());
+				con.add(courseURI, hasFeesOutState, courseFeesOutState);
+			}
+			if(course.getEnrollments()!=-1){
+				Literal courseEnrollments = f.createLiteral(course.getEnrollments());
+				con.add(courseURI, hasEnrollments, courseEnrollments);
+			}
+			
+			//connect univ to the main course
+			con.add(univURI, hasCourse, courseURI);
+			
+			//create the subcourse if exists
+			if(subCourse!=null){
+				URI subCourseURI = f.createURI(subCourse.getURI());
+				Literal subCourseName = f.createLiteral(subCourse.getName());
+				con.add(subCourseURI, RDF.TYPE, subCategoryURI);
+				con.add(subCourseURI, name, subCourseName);
+				if(subCourse.getRank()!=-1){
+					Literal subCourseRank = f.createLiteral(subCourse.getRank());
+					con.add(subCourseURI, hasRank, subCourseRank);
+				}
+				if(subCourse.getFeesInstate()!=-1){
+					Literal subCourseFeesInstate = f.createLiteral(subCourse.getFeesInstate());
+					con.add(subCourseURI, hasFeesInstate, subCourseFeesInstate);
+				}
+				if(subCourse.getFeesOutState()!=-1){
+					Literal subCourseFeesOutState = f.createLiteral(subCourse.getFeesOutState());
+					con.add(subCourseURI, hasFeesOutState, subCourseFeesOutState);
+				}
+				if(subCourse.getEnrollments()!=-1){
+					Literal subCourseEnrollments = f.createLiteral(subCourse.getEnrollments());
+					con.add(courseURI, hasEnrollments, subCourseEnrollments);
+				}
+				//connect the main course to subcourse
+				con.add(courseURI, hasSubCourse, subCourseURI);				
+			}
+			
+			
 	}
 	
 	

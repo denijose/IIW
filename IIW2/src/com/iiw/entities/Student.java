@@ -9,7 +9,14 @@ public class Student {
 	private Integer greScore;
 	private Integer toeflScore;
 	
-	public Student(){}
+	public Student(){
+		this.URI = null;
+		this.name = null;
+		this.age = null;
+		this.stream = null;
+		this.greScore = null;
+		this.toeflScore = null;
+	}
 	
 	public Student(String URI,String name, Integer age, String stream, Integer greScore,
 			Integer toeflScore) {
