@@ -161,10 +161,13 @@ public class Manage {
 			URI name = f.createURI("http://dbpedia.org/property/name");			
 			URI hasCourse = f.createURI("http://example.org/hasCourse"); 
 			URI hasSubCourse = f.createURI("http://example.org/hasSubCourse"); 
-			URI hasRank = f.createURI("http://example.org/hasCategory");
+			URI hasRank = f.createURI("http://example.org/hasRank");
 			URI hasFeesInstate = f.createURI("http://example.org/hasFeesInstate");
 			URI hasFeesOutState = f.createURI("http://example.org/hasFeesOutState"); 
 			URI hasEnrollments = f.createURI("http://example.org/hasEnrollments"); 	
+			
+			//create university
+			createUniversity(univ);
 			
 			//create the main course			
 			URI courseURI = f.createURI(course.getURI());
@@ -215,7 +218,8 @@ public class Manage {
 				}
 				//connect the main course to subcourse
 				con.add(courseURI, hasSubCourse, subCourseURI);				
-			}		
+			}
+			con.close();
 			
 	}
 	
@@ -234,7 +238,7 @@ public class Manage {
 		      con.close();
 		}
 		
-		public static void createStudenUniversityConnection(University univ, Student student, String status) throws RepositoryException{
+		public static void createStudentUniversityConnection(University univ, Student student, String status) throws RepositoryException{
 			createUniversity(univ);
 			createStudent(student);
 			Repository repo = new HTTPRepository(sesameServer, repositoryID);
