@@ -234,21 +234,31 @@ public class USNCustomWrapper {
 			}
 			
 			// Creating course and subCourse URIs
+			
 			String courseURI = "", specialtyURI = "";
-    		Pattern p = Pattern.compile("&program=([\\w-]+)&");
-    		Matcher m = p.matcher(url);
-    		if (m.find()) {
-    		courseURI = "/"+m.group(1);
-    		}
+			
+    		
     		if (subCategory) {
-    			Pattern p2 = Pattern.compile("&specialty=([\\w-]+)&");
+        		Pattern p = Pattern.compile("&program=([\\w-]+)&");
+        		Matcher m = p.matcher(url);
+        		if (m.find()) {
+        		courseURI = "/"+m.group(1);
+        		}
+    			Pattern p2 = Pattern.compile("&specialty=([\\w-]+)");
     			Matcher m2 = p2.matcher(url);
     			if (m2.find()) {
     				specialtyURI = "/"+m2.group(1);
     			}
+    		} else {
+    			Pattern p = Pattern.compile("&program=([\\w-]+)");
+        		Matcher m = p.matcher(url);
+        		if (m.find()) {
+        		courseURI = "/"+m.group(1);
+        		}
     		}
-			
-			System.out.println(schoolURI+"\t"+schoolName+"\t"+cityState[0]+"\t"+cityState[1]+"\t"+rank);
+    		
+			System.out.println("CourseURI - "+schoolURI+courseURI+"\t"+"SubURI - "+schoolURI+courseURI+specialtyURI+"\t"+"UniversityURI - "+schoolURI);
+			//System.out.println(schoolURI+"\t"+schoolName+"\t"+cityState[0]+"\t"+cityState[1]+"\t"+rank);
 			University university = new University(schoolURI,schoolName,"USA",cityState[0],cityState[1],false);
     		Course course = new Course(schoolURI+courseURI,cat.getName(),rank,-1,-1,-1);
     		try {
