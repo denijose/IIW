@@ -11,9 +11,9 @@ public class Course {
 		URI = null;
 		this.name = null;
 		this.rank = (Integer) null;
-		this.feesInstate = (Integer) null;;
-		this.feesOutState = (Integer) null;;
-		this.enrollments = (Integer) null;;
+		this.feesInstate = (Integer) null;
+		this.feesOutState = (Integer) null;
+		this.enrollments = (Integer) null;
 	}
 	
 	public Course(String uRI, String name, int rank, int feesInstate,
