@@ -98,14 +98,14 @@ public class Manage {
 		repo.initialize();		
 		
 		ValueFactory f = repo.getValueFactory();	
-		URI studentClass = f.createURI("http://dbpedia.org/ontology/person");
+		URI person = f.createURI("http://dbpedia.org/ontology/person");
 		URI studentURI = f.createURI(s.getURI());
 		URI name = f.createURI("http://dbpedia.org/property/name");
-		Literal sName = f.createLiteral(s.getName());	
+		Literal studentName = f.createLiteral(s.getName());	
 		
 		RepositoryConnection con = repo.getConnection();		
-		con.add(studentURI, RDF.TYPE, studentClass);
-	    con.add(studentURI, name, sName);	    
+		con.add(studentURI, RDF.TYPE, person);
+	    con.add(studentURI, name, studentName);	    
 	    con.close();
 	}
 	
@@ -155,7 +155,9 @@ public class Manage {
 			
 			URI univURI = f.createURI(univ.getURI());
 			URI categoryURI = f.createURI(category.getURI());
-			URI subCategoryURI = f.createURI(subCategory.getURI());
+			URI subCategoryURI = null;
+			if(subCategory!=null)
+			  subCategoryURI = f.createURI(subCategory.getURI());
 			URI name = f.createURI("http://dbpedia.org/property/name");			
 			URI hasCourse = f.createURI("http://example.org/hasCourse"); 
 			URI hasSubCourse = f.createURI("http://example.org/hasSubCourse"); 
@@ -213,12 +215,47 @@ public class Manage {
 				}
 				//connect the main course to subcourse
 				con.add(courseURI, hasSubCourse, subCourseURI);				
-			}
-			
+			}		
 			
 	}
 	
-	
+		public static void test() throws RepositoryException{
+			Repository repo = new HTTPRepository(sesameServer, repositoryID);
+			repo.initialize();
+			ValueFactory f = repo.getValueFactory();	
+			RepositoryConnection con = repo.getConnection();	
+			URI bob = f.createURI("http://example.org/people/bob");
+			URI name = f.createURI("http://example.org/ontology/name");
+			URI person = f.createURI("http://dbpedia.org/ontology/person");
+		
+			Literal bobsName = f.createLiteral("Boby");
+		      con.add(bob, RDF.TYPE, person);
+		      con.add(bob, name, bobsName);		      
+		      con.close();
+		}
+		
+		public static void createStudenUniversityConnection(University univ, Student student, String status) throws RepositoryException{
+			createUniversity(univ);
+			createStudent(student);
+			Repository repo = new HTTPRepository(sesameServer, repositoryID);
+			repo.initialize();
+			ValueFactory f = repo.getValueFactory();	
+			RepositoryConnection con = repo.getConnection();
+			URI studentURI = f.createURI(student.getURI());
+			URI univURI = f.createURI(univ.getURI());	
+			URI isWaiting = f.createURI("http://example.org/isWaiting");
+			URI hasAdmit = f.createURI("http://example.org/hasAdmit");
+			URI hasReject = f.createURI("http://example.org/hasReject");
+			if(status.equalsIgnoreCase("isWaiting"))
+			  con.add(studentURI, isWaiting, univURI);
+			if(status.equalsIgnoreCase("isWaiting"))
+				  con.add(studentURI, hasAdmit, univURI);
+			if(status.equalsIgnoreCase("hasAdmit"))
+				  con.add(studentURI, hasReject, univURI);
+		  	    
+		    con.close();
+			
+		}
 	
 }
 

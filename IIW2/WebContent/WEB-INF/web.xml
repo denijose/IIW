@@ -1,42 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+<web_1:web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://java.sun.com/xml/ns/javaee" xmlns:web_1="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>IIW2</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-  <servlet>
+  <web_1:welcome-file-list>
+    <web_1:welcome-file>index.html</web_1:welcome-file>
+    <web_1:welcome-file>index.htm</web_1:welcome-file>
+    <web_1:welcome-file>index.jsp</web_1:welcome-file>
+    <web_1:welcome-file>default.html</web_1:welcome-file>
+    <web_1:welcome-file>default.htm</web_1:welcome-file>
+    <web_1:welcome-file>default.jsp</web_1:welcome-file>
+  </web_1:welcome-file-list>
+  <web_1:servlet>
     <description></description>
     <display-name>Form</display-name>
-    <servlet-name>Form</servlet-name>
-    <servlet-class>com.iiw.controller.Form</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Form</servlet-name>
-    <url-pattern>/Form</url-pattern>
-  </servlet-mapping>
-  <servlet>
+    <web_1:servlet-name>Form</web_1:servlet-name>
+    <web_1:servlet-class>com.iiw.controller.Form</web_1:servlet-class>
+  </web_1:servlet>
+  <web_1:servlet-mapping>
+    <web_1:servlet-name>Form</web_1:servlet-name>
+    <web_1:url-pattern>/Form</web_1:url-pattern>
+  </web_1:servlet-mapping>
+  <web_1:servlet>
     <description></description>
     <display-name>WrapperTest</display-name>
-    <servlet-name>WrapperTest</servlet-name>
-    <servlet-class>com.iiw.controller.WrapperTest</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>WrapperTest</servlet-name>
-    <url-pattern>/WrapperTest</url-pattern>
-  </servlet-mapping>
-  <servlet>
+    <web_1:servlet-name>WrapperTest</web_1:servlet-name>
+    <web_1:servlet-class>com.iiw.controller.WrapperTest</web_1:servlet-class>
+  </web_1:servlet>
+  <web_1:servlet-mapping>
+    <web_1:servlet-name>WrapperTest</web_1:servlet-name>
+    <web_1:url-pattern>/WrapperTest</web_1:url-pattern>
+  </web_1:servlet-mapping>
+  <web_1:servlet>
     <description></description>
     <display-name>USNWrapper</display-name>
-    <servlet-name>USNWrapper</servlet-name>
-    <servlet-class>com.iiw.controller.USNWrapper</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>USNWrapper</servlet-name>
-    <url-pattern>/USNWrapper</url-pattern>
-  </servlet-mapping>
-</web-app>
+    <web_1:servlet-name>USNWrapper</web_1:servlet-name>
+    <web_1:servlet-class>com.iiw.controller.USNWrapper</web_1:servlet-class>
+  </web_1:servlet>
+  <web_1:servlet-mapping>
+    <web_1:servlet-name>USNWrapper</web_1:servlet-name>
+    <web_1:url-pattern>/USNWrapper</web_1:url-pattern>
+  </web_1:servlet-mapping>
+  <web_1:servlet>
+    <description></description>
+    <display-name>SearchServlet</display-name>
+    <web_1:servlet-name>SearchServlet</web_1:servlet-name>
+    <web_1:servlet-class>com.iiw.controller.SearchServlet</web_1:servlet-class>
+  </web_1:servlet>
+  <web_1:servlet-mapping>
+    <web_1:servlet-name>SearchServlet</web_1:servlet-name>
+    <web_1:url-pattern>/SearchServlet</web_1:url-pattern>
+  </web_1:servlet-mapping>
+</web_1:web-app>

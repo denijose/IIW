@@ -59,10 +59,9 @@
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
-        
-      <form action="myServlet" method="post">
-    		First Name 		<input type="text" name="first_name"><br>
-    		Second Name 	<input type="text" name="second_name"><br>
+      Welcome <%=request.getAttribute("name")%>
+      <p> Start Searching <p>
+      <form action="SearchServlet" method="post">
    		 	Select Country:   <select id="country2" name ="country2"></select>
 					<script language="javascript"><br>
 					populateCountries("country2");
@@ -79,9 +78,9 @@
 					  <option value="2">Arts</option>
 					  <option value="3">Science</option>					  
 			</select><br>		
-			Fees Range 		<input type="text" name="fees"><br>			 
+			Fees Range 		<input type="text" name="fees"><br>	<br>			 
 					 
-					 
+			<input type="submit" value="Search">		 
 </form>  
        
       </div>
