@@ -33,8 +33,9 @@ public class SearchServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter pw = response.getWriter();
-		pw.write("denis");
+//		String country = request.getParameter("country");
+//		Set<String> universities
+		
 	}
 
 }

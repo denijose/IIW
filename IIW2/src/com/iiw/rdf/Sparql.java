@@ -54,7 +54,7 @@ public class Sparql {
 		repo = new HTTPRepository(sesameServer, repositoryID);
 		repo.initialize();
 		RepositoryConnection con = repo.getConnection();con = repo.getConnection();
-		String p = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
+		String p = "<http://example.org/ofType>";
 		String o = "<http://dbpedia.org/ontology/EducationalInstitution>";
 		String queryString  = "SELECT ?name WHERE " +
 				 		       " { ?x " + p + " " + o + "." +

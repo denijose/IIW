@@ -32,7 +32,7 @@ public class Manage {
 		URI studentClass = f.createURI("http://dbpedia.org/ontology/person");
 		
 //		RepositoryConnection con = repo.getConnection();
-//		con.add(arg0, arg1, arg2, arg3).add(universityClass, RDF.TYPE, RDF.class);
+//		con.add(arg0, arg1, arg2, arg3).add(universityClass, ofType, RDF.class);
 //	    con.add(studentClass, name, RDF.class);	    
 //	    con.close();
 	}
@@ -81,15 +81,37 @@ public class Manage {
 		repo = new HTTPRepository(sesameServer, repositoryID);
 		repo.initialize();		
 		
-		ValueFactory f = repo.getValueFactory();		
+		ValueFactory f = repo.getValueFactory();	
+		URI ofType = f.createURI("http://example.org/ofType");
 		URI univURI = f.createURI(univ.getURI());		
 		Literal uniName = f.createLiteral(univ.getName());
 		URI universityClass = f.createURI("http://dbpedia.org/ontology/EducationalInstitution");
 		URI name = f.createURI("http://dbpedia.org/property/name");
+		URI country = f.createURI("http://dbpedia.org/property/country");
+		URI city = f.createURI("http://dbpedia.org/property/city");
+		URI state = f.createURI("http://dbpedia.org/property/state");
+		URI univType = f.createURI("http://example.org/universityType");
+		
 		
 		RepositoryConnection con = repo.getConnection();		
-		con.add(univURI, RDF.TYPE, universityClass);
-	    con.add(univURI, name, uniName);	    
+		con.add(univURI, ofType, universityClass);
+	    con.add(univURI, name, uniName);
+	    if(univ.getCountry()!=null){
+	    	Literal unicountry = f.createLiteral(univ.getCountry());
+	    	con.add(univURI, country, unicountry);
+	    }
+	    if(univ.getCity()!=null){
+	    	Literal unicity = f.createLiteral(univ.getCity());
+	    	con.add(univURI, city, unicity);
+	    }
+	    if(univ.getState()!=null){
+	    	Literal unistate = f.createLiteral(univ.getState());
+	    	con.add(univURI, state, unistate);
+	    }	
+	    if(univ.getType()!=null){
+	    	Literal uniType = f.createLiteral(univ.getType());
+	    	con.add(univURI, state, univType);
+	    }
 	    con.close();
 	}
 	
@@ -98,13 +120,14 @@ public class Manage {
 		repo.initialize();		
 		
 		ValueFactory f = repo.getValueFactory();	
+		URI ofType = f.createURI("http://example.org/ofType");
 		URI person = f.createURI("http://dbpedia.org/ontology/person");
 		URI studentURI = f.createURI(s.getURI());
 		URI name = f.createURI("http://dbpedia.org/property/name");
 		Literal studentName = f.createLiteral(s.getName());	
 		
 		RepositoryConnection con = repo.getConnection();		
-		con.add(studentURI, RDF.TYPE, person);
+		con.add(studentURI, ofType, person);
 	    con.add(studentURI, name, studentName);	    
 	    con.close();
 	}
@@ -114,13 +137,14 @@ public class Manage {
 		repo.initialize();		
 		
 		ValueFactory f = repo.getValueFactory();	
+		URI ofType = f.createURI("http://example.org/ofType");
 		URI categoryClass = f.createURI("http://example.org/category");
 		URI categoryURI = f.createURI(c.getURI());
 		URI name = f.createURI("http://dbpedia.org/property/name");
 		Literal cName = f.createLiteral(c.getName());	
 		
 		RepositoryConnection con = repo.getConnection();		
-		con.add(categoryURI, RDF.TYPE, categoryClass);
+		con.add(categoryURI, ofType, categoryClass);
 	    con.add(categoryURI, name, cName);	    
 	    con.close();
 	} 
@@ -129,19 +153,20 @@ public class Manage {
 		Repository repo = new HTTPRepository(sesameServer, repositoryID);
 		repo.initialize();
 		ValueFactory f = repo.getValueFactory();	
+		URI ofType = f.createURI("http://example.org/ofType");
 		URI categoryClass = f.createURI("http://example.org/category");
 		URI categoryURI = f.createURI(c.getURI());
 		URI name = f.createURI("http://dbpedia.org/property/name");
 		URI hasSubCategory = f.createURI("http://example.org/hasSubCategory");
 		Literal cName = f.createLiteral(c.getName());	
 		RepositoryConnection con = repo.getConnection();		
-		con.add(categoryURI, RDF.TYPE, categoryClass);
+		con.add(categoryURI, ofType, categoryClass);
 	    con.add(categoryURI, name, cName);	 
 	    
 	    for(Category subCategory : subCategories){
 	    	URI subCategoryURI = f.createURI(subCategory.getURI());
 	    	Literal subCategoryName = f.createLiteral(subCategory.getName());	
-	    	con.add(subCategoryURI, RDF.TYPE, categoryClass);
+	    	con.add(subCategoryURI, ofType, categoryClass);
 	    	con.add(subCategoryURI, name, subCategoryName);	 
 	    	con.add(categoryURI, hasSubCategory, subCategoryURI);	    	
 	    }
@@ -151,6 +176,7 @@ public class Manage {
 			Repository repo = new HTTPRepository(sesameServer, repositoryID);
 			repo.initialize();
 			ValueFactory f = repo.getValueFactory();
+			URI ofType = f.createURI("http://example.org/ofType");
 			RepositoryConnection con = repo.getConnection();	
 			
 			URI univURI = f.createURI(univ.getURI());
@@ -172,11 +198,13 @@ public class Manage {
 			//create the main course			
 			URI courseURI = f.createURI(course.getURI());
 			Literal courseName = f.createLiteral(course.getName());
-			con.add(courseURI, RDF.TYPE, categoryURI);
+			con.add(courseURI, ofType, categoryURI);
 			con.add(courseURI, name, courseName);			
 			if(course.getRank()!=-1){
-				Literal courseRank = f.createLiteral(course.getRank());
-				con.add(courseURI, hasRank, courseRank);
+				if(subCourse.getRank()==-1){
+					Literal courseRank = f.createLiteral(course.getRank());
+					con.add(courseURI, hasRank, courseRank);
+				}
 			}
 			if(course.getFeesInstate()!=-1){
 				Literal courseFeesInstate = f.createLiteral(course.getFeesInstate());
@@ -198,11 +226,14 @@ public class Manage {
 			if(subCourse!=null){
 				URI subCourseURI = f.createURI(subCourse.getURI());
 				Literal subCourseName = f.createLiteral(subCourse.getName());
-				con.add(subCourseURI, RDF.TYPE, subCategoryURI);
+				con.add(subCourseURI, ofType, subCategoryURI);
 				con.add(subCourseURI, name, subCourseName);
 				if(subCourse.getRank()!=-1){
 					Literal subCourseRank = f.createLiteral(subCourse.getRank());
 					con.add(subCourseURI, hasRank, subCourseRank);
+				} else {
+					Literal courseRank = f.createLiteral(course.getRank());
+					con.add(courseURI, hasRank, courseRank);
 				}
 				if(subCourse.getFeesInstate()!=-1){
 					Literal subCourseFeesInstate = f.createLiteral(subCourse.getFeesInstate());
@@ -227,13 +258,14 @@ public class Manage {
 			Repository repo = new HTTPRepository(sesameServer, repositoryID);
 			repo.initialize();
 			ValueFactory f = repo.getValueFactory();	
+			URI ofType = f.createURI("http://example.org/ofType");
 			RepositoryConnection con = repo.getConnection();	
 			URI bob = f.createURI("http://example.org/people/bob");
 			URI name = f.createURI("http://example.org/ontology/name");
 			URI person = f.createURI("http://dbpedia.org/ontology/person");
 		
 			Literal bobsName = f.createLiteral("Boby");
-		      con.add(bob, RDF.TYPE, person);
+		      con.add(bob, ofType, person);
 		      con.add(bob, name, bobsName);		      
 		      con.close();
 		}
@@ -244,6 +276,7 @@ public class Manage {
 			Repository repo = new HTTPRepository(sesameServer, repositoryID);
 			repo.initialize();
 			ValueFactory f = repo.getValueFactory();	
+			URI ofType = f.createURI("http://example.org/ofType");
 			RepositoryConnection con = repo.getConnection();
 			URI studentURI = f.createURI(student.getURI());
 			URI univURI = f.createURI(univ.getURI());	

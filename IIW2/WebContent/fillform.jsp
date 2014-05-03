@@ -62,8 +62,8 @@
       Welcome <%=request.getAttribute("name")%>
       <p> Start Searching <p>
       <form action="SearchServlet" method="post">
-   		 	Select Country:   <select id="country2" name ="country2"></select>
-					<script language="javascript"><br>
+   		 	Select Country:   <select id="country" name ="country"></select>
+					<script language="javascript">
 					populateCountries("country2");
 					 </script>
 					 <br>
