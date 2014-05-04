@@ -1,5 +1,7 @@
 package com.iiw.entities;
 
+import java.util.ArrayList;
+
 public class University {
   
 	private String URI;
@@ -8,11 +10,18 @@ public class University {
 	private String country;
 	private String city;
 	private String state;
-	private String acceptanceLevel;
-	
-	
-	
+	private String acceptanceLevel;	
 	private Boolean isFunded;
+	
+	//for edulix uiversities
+	private int numOfAdimts;	
+	private int numOfRejects;
+	private int numOfWaiting;
+	private ArrayList<Student> acceptedStudents;
+	private ArrayList<Student> rejectedStudents;
+	private ArrayList<Student> waitingStudents;
+	
+
 	
 	public University(){
 		this.URI = null;
@@ -21,6 +30,12 @@ public class University {
 		this.city = null;
 		this.state = null;		
 		this.isFunded = null;
+		this.numOfAdimts = -1;
+		this.numOfRejects = -1;
+		this.numOfWaiting = -1;
+		this.acceptedStudents = null;;
+		this.rejectedStudents = null;
+		this.waitingStudents = null;
 	}
 	
 	public University(String URI, String name, String country, String city, String state, boolean isFunded){
@@ -115,6 +130,53 @@ public class University {
 	}
 
 	
+	public int getNumOfAdimts() {
+		return numOfAdimts;
+	}
+
+	public void setNumOfAdimts(int numOfAdimts) {
+		this.numOfAdimts = numOfAdimts;
+	}
+
+	public int getNumOfRejects() {
+		return numOfRejects;
+	}
+
+	public void setNumOfRejects(int numOfRejects) {
+		this.numOfRejects = numOfRejects;
+	}
+
+	public int getNumOfWaiting() {
+		return numOfWaiting;
+	}
+
+	public void setNumOfWaiting(int numOfWaiting) {
+		this.numOfWaiting = numOfWaiting;
+	}
+
+	public ArrayList<Student> getAcceptedStudents() {
+		return acceptedStudents;
+	}
+
+	public void setAcceptedStudents(ArrayList<Student> acceptedStudents) {
+		this.acceptedStudents = acceptedStudents;
+	}
+
+	public ArrayList<Student> getRejectedStudents() {
+		return rejectedStudents;
+	}
+
+	public void setRejectedStudents(ArrayList<Student> rejectedStudents) {
+		this.rejectedStudents = rejectedStudents;
+	}
+
+	public ArrayList<Student> getWaitingStudents() {
+		return waitingStudents;
+	}
+
+	public void setWaitingStudents(ArrayList<Student> waitingStudents) {
+		this.waitingStudents = waitingStudents;
+	}
 
 	
 	

@@ -16,6 +16,7 @@ import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.http.HTTPRepository;
 
+import com.iiw.entities.University;
 import com.iiw.util.Util;
 
 public class Sparql {
@@ -98,5 +99,53 @@ public class Sparql {
 			
 		System.out.println(university);
 		return university;
+	}
+	
+	public static University getUniversityBean(String universityName) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
+		String name = getUniversityWithName(universityName);
+		String URI;
+		String country;
+		String city;
+		String state;
+
+		repo = new HTTPRepository(sesameServer, repositoryID);
+		repo.initialize();
+		RepositoryConnection con = repo.getConnection();
+		String p = "<http://example.org/ofType>";
+		String o = "<http://dbpedia.org/ontology/EducationalInstitution>";
+		String queryString  = "SELECT ?u ?name ?country ?city ?state WHERE " +
+				              "{ ?u <http://example.org/ofType> <http://dbpedia.org/ontology/EducationalInstitution> . " +  
+				              "  ?u <http://dbpedia.org/property/name> ?name . " +
+				              "  OPTIONAL { ?u  <http://dbpedia.org/property/country> ?country} . " +
+				              "  OPTIONAL { ?u  <http://dbpedia.org/property/city> ?city} . " +
+				              "  OPTIONAL { ?u  <http://dbpedia.org/property/state> ?state} ." +
+				              "  ?u <http://dbpedia.org/property/name> ?" + name + " . " +
+				              "}";		
+		System.out.println(queryString);
+		University univ = new University();
+		TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+    	  TupleQueryResult result = tupleQuery.evaluate();
+    	  try {
+    		  List<String> bindingNames = result.getBindingNames();
+    		  if(bindingNames.size()==0)
+    			  return null;
+    		  while (result.hasNext()) {
+    		     BindingSet bindingSet = result.next();
+    		     Value valueOfURI = bindingSet.getValue(bindingNames.get(0));
+    		     Value valueOfName = bindingSet.getValue(bindingNames.get(1));
+    		     Value valueOfCountry = bindingSet.getValue(bindingNames.get(2));
+    		     Value valueOfCity = bindingSet.getValue(bindingNames.get(3));
+    		     Value valueOfState = bindingSet.getValue(bindingNames.get(4));
+    		     univ.setURI(valueOfURI.toString());
+    		     univ.setName(valueOfName.toString());
+    		     univ.setCountry(valueOfCountry.toString());
+    		     univ.setState(valueOfState.toString());
+    		     univ.setCity(valueOfCity.toString());
+    		  }
+    	  }
+	  	  finally{
+	  	      result.close();
+	  	  }
+		return univ;
 	}
 }

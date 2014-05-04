@@ -29,6 +29,47 @@
     <![endif]-->
     
     <script type= "text/javascript" src = "countries.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script>
+		
+			function search()
+			{
+			var xmlhttp;
+			if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			  xmlhttp=new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			xmlhttp.onreadystatechange=function()
+			  {
+			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			    {
+				  var json = JSON.parse(xmlhttp.responseText);
+				  showResults(json);
+			    }
+			  }
+			var country = document.getElementById("country").value;
+			var URL = "SearchServlet?country=" + country;
+			xmlhttp.open("GET",URL,true);
+			xmlhttp.send();
+			}
+	
+			function showResults(json){
+				 var table = document.createElement('table');
+				 table.className = "table table-striped table-hover";
+				 table.innerHTML = "<tr><td>Rank</td><td>University</td><td>Fees</td></tr>";
+				for(var i=0;i<5;i++){		
+					 table.innerHTML += "<tr><td>"+i+"</td><td>"+json[i].name+"</td><td>50</td></tr>";				     
+				}
+				table.innerHTML += 
+				document.getElementById("tableDiv").appendChild(table);
+			}
+			
+		</script>
+
     
   </head>
 
@@ -61,27 +102,30 @@
       <div class="jumbotron">
       Welcome <%=request.getAttribute("name")%>
       <p> Start Searching <p>
-      <form action="SearchServlet" method="post">
+      <form id="searchForm" action="/" >
    		 	Select Country:   <select id="country" name ="country"></select>
 					<script language="javascript">
-					populateCountries("country2");
+					populateCountries("country");
 					 </script>
 					 <br>
-			<select> GRE Score Range
-					  <option value="1">290-300</option>
-					  <option value="2">290-300</option>
-					  <option value="3">290-300</option>
-					  <option value="4">290-300</option>
-			</select><br>
-			<select> Discipline
-					  <option value="1">Engineering</option>
-					  <option value="2">Arts</option>
-					  <option value="3">Science</option>					  
-			</select><br>		
-			Fees Range 		<input type="text" name="fees"><br>	<br>			 
-					 
+			GRE Score Range <select> 
+							  <option value="1">290-300</option>
+							  <option value="2">290-300</option>
+							  <option value="3">290-300</option>
+							  <option value="4">290-300</option>
+					          </select><br>
+			Discipline <select> 
+					 		 <option value="1">Engineering</option>
+					  	   	<option value="2">Arts</option>
+					  		<option value="3">Science</option>					  
+						</select><br>		
+			Fees Range 	<input type="text" name="fees"><br>	<br>			 
+			<button type="button" onclick="search()">Searcho</button>		 
 			<input type="submit" value="Search">		 
 </form>  
+<br><br>
+
+<div id="tableDiv"></div>
        
       </div>
       </div> <!-- /container -->

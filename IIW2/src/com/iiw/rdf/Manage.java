@@ -7,6 +7,8 @@ import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.model.vocabulary.RDF;
+import org.openrdf.query.MalformedQueryException;
+import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
@@ -115,6 +117,48 @@ public class Manage {
 	    con.close();
 	}
 	
+	public static void createEdulixUniversity(University univ) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
+		University USNewsUnivBean = null;
+		if(univ.getURI().contains("dulix")){
+		   if( (USNewsUnivBean = Sparql.getUniversityBean(univ.getName())) == null )
+			   return;
+		}
+		
+		repo = new HTTPRepository(sesameServer, repositoryID);
+		repo.initialize();		
+		ValueFactory f = repo.getValueFactory();	
+		URI UnivURI = f.createURI(univ.getURI());		
+		URI numOfAdimts = f.createURI("http://example.org/numOfAdimts");
+		URI numOfRejects = f.createURI("http://example.org/numOfAdimts");
+		URI numOfWaiting = f.createURI("http://example.org/numOfWaiting");
+		RepositoryConnection con = repo.getConnection();
+		
+	    for(Student s : univ.getAcceptedStudents())
+	    	createStudentUniversityConnection(USNewsUnivBean,s,"hasAdmit");
+	    	
+		
+	    for(Student s : univ.getRejectedStudents())
+	    	createStudentUniversityConnection(USNewsUnivBean,s,"hasReject");
+		
+	    for(Student s : univ.getWaitingStudents())
+	    	createStudentUniversityConnection(USNewsUnivBean,s,"isWaiting");
+		
+	    if(univ.getNumOfAdimts() != -1){
+	    	Literal numOfAdimtsLiteral = f.createLiteral(univ.getNumOfAdimts());
+	    	con.add(UnivURI, numOfAdimts, numOfAdimtsLiteral);
+	    }
+	    if(univ.getNumOfRejects() != -1){
+	    	Literal numOfRejectsLiteral = f.createLiteral(univ.getNumOfRejects());
+	    	con.add(UnivURI, numOfRejects, numOfRejectsLiteral);
+	    }
+	    if(univ.getNumOfWaiting() != -1){
+	    	Literal numOfWaitingLiteral = f.createLiteral(univ.getNumOfWaiting());
+	    	con.add(UnivURI, numOfWaiting, numOfWaitingLiteral);
+	    }
+
+	    con.close();
+	}
+	
 	public static void createStudent(Student s) throws RepositoryException{
 		Repository repo = new HTTPRepository(sesameServer, repositoryID);
 		repo.initialize();		
@@ -124,11 +168,27 @@ public class Manage {
 		URI person = f.createURI("http://dbpedia.org/ontology/person");
 		URI studentURI = f.createURI(s.getURI());
 		URI name = f.createURI("http://dbpedia.org/property/name");
-		Literal studentName = f.createLiteral(s.getName());	
+		URI GREScore = f.createURI("http://dbpedia.org/property/GREScore");
+		URI age = f.createURI("http://dbpedia.org/property/age");
+		URI stream = f.createURI("http://dbpedia.org/property/stream");
+		RepositoryConnection con = repo.getConnection();	
 		
-		RepositoryConnection con = repo.getConnection();		
+		Literal studentName = f.createLiteral(s.getName());				
 		con.add(studentURI, ofType, person);
 	    con.add(studentURI, name, studentName);	    
+	    
+	    if(s.getGreScore()!=-1 || s.getGreScore()!= null ){
+	    	Literal GREScoreLiteral = f.createLiteral(s.getGreScore());	
+	    	con.add(studentURI, GREScore, GREScoreLiteral);
+	    }
+	    if(s.getAge()!=-1 || s.getAge()!= null ){
+	    	Literal ageLiteral = f.createLiteral(s.getGreScore());	
+	    	con.add(studentURI, age, ageLiteral);
+	    }
+	    if(s.getStream()!= null){
+	    	Literal streamLiteral = f.createLiteral(s.getGreScore());	
+	    	con.add(studentURI, stream, streamLiteral);
+	    }
 	    con.close();
 	}
 	
@@ -172,7 +232,7 @@ public class Manage {
 	    }
 	}
 	    
-	 public static void createUnivCourseConnections(University univ, Course course, Category category, Course subCourse, Category subCategory) throws RepositoryException{
+	public static void createUnivCourseConnections(University univ, Course course, Category category, Course subCourse, Category subCategory) throws RepositoryException{
 			Repository repo = new HTTPRepository(sesameServer, repositoryID);
 			repo.initialize();
 			ValueFactory f = repo.getValueFactory();
@@ -254,7 +314,7 @@ public class Manage {
 			
 	}
 	
-		public static void test() throws RepositoryException{
+	public static void test() throws RepositoryException{
 			Repository repo = new HTTPRepository(sesameServer, repositoryID);
 			repo.initialize();
 			ValueFactory f = repo.getValueFactory();	
@@ -270,8 +330,8 @@ public class Manage {
 		      con.close();
 		}
 		
-		public static void createStudentUniversityConnection(University univ, Student student, String status) throws RepositoryException{
-			createUniversity(univ);
+	public static void createStudentUniversityConnection(University univ, Student student, String status) throws RepositoryException{
+			//createUniversity(univ);
 			createStudent(student);
 			Repository repo = new HTTPRepository(sesameServer, repositoryID);
 			repo.initialize();
@@ -285,9 +345,9 @@ public class Manage {
 			URI hasReject = f.createURI("http://example.org/hasReject");
 			if(status.equalsIgnoreCase("isWaiting"))
 			  con.add(studentURI, isWaiting, univURI);
-			if(status.equalsIgnoreCase("isWaiting"))
-				  con.add(studentURI, hasAdmit, univURI);
 			if(status.equalsIgnoreCase("hasAdmit"))
+				  con.add(studentURI, hasAdmit, univURI);
+			if(status.equalsIgnoreCase("hasReject"))
 				  con.add(studentURI, hasReject, univURI);
 		  	    
 		    con.close();
