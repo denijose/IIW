@@ -52,7 +52,11 @@
 			    }
 			  }
 			var country = document.getElementById("country").value;
-			var URL = "SearchServlet?country=" + country;
+			var select = document.getElementById("category");
+			var category = select.options[select.selectedIndex].value;
+			var fees = document.getElementById("feesRange");
+			var gre = document.getElementById("GREScore");
+			var URL = "SearchServlet?country=" + country +"&category=" +category + "&feesRange=" + fees + "&GREScoreRange=" + gre;
 			xmlhttp.open("GET",URL,true);
 			xmlhttp.send();
 			}
@@ -68,6 +72,27 @@
 				document.getElementById("tableDiv").appendChild(table);
 			}
 			
+			//window.onload = fillCategories(){
+			//		alert('muhahah');
+			//}
+			
+			function addCategories()
+          {          
+				var json = '<%= request.getAttribute("categoryJSON")%>';
+				var categories = JSON.parse(json);
+				var newOption = document.createElement("option");
+	            document.getElementById("category").options.add(newOption);
+	             newOption.text = "";
+	             newOption.value = "empty";	
+				for(var i=0;i<categories.length;i++){
+					var newOption = document.createElement("option");
+	              document.getElementById("category").options.add(newOption);
+	        			newOption.text = categories[i];
+	        		newOption.value = categories[i];	
+				}
+	 		}
+				
+
 		</script>
 
     
@@ -80,7 +105,7 @@
   present a graphical Login button that triggers the FB.login() function when clicked. -->
 
 
-  <body role="document">
+  <body role="document" onload="addCategories();">
 
     <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -108,18 +133,14 @@
 					populateCountries("country");
 					 </script>
 					 <br>
-			GRE Score Range <select> 
+			GRE Score Range <select id="GREScore"> 
 							  <option value="1">290-300</option>
 							  <option value="2">290-300</option>
 							  <option value="3">290-300</option>
 							  <option value="4">290-300</option>
 					          </select><br>
-			Discipline <select> 
-					 		 <option value="1">Engineering</option>
-					  	   	<option value="2">Arts</option>
-					  		<option value="3">Science</option>					  
-						</select><br>		
-			Fees Range 	<input type="text" name="fees"><br>	<br>			 
+			Category <select id="category"></select><br>		
+			Fees Range 	<input id="feesRange" type="text" name="fees"><br>	<br>			 
 			<button type="button" onclick="search()">Searcho</button>		 
 			<input type="submit" value="Search">		 
 </form>  

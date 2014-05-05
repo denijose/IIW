@@ -1,5 +1,6 @@
 package com.iiw.rdf;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -147,5 +148,70 @@ public class Sparql {
 	  	      result.close();
 	  	  }
 		return univ;
+	}
+	
+	
+	public static Set<String> getAllCategories() throws RepositoryException, MalformedQueryException, QueryEvaluationException{
+		repo = new HTTPRepository(sesameServer, repositoryID);
+		repo.initialize();
+		RepositoryConnection con = repo.getConnection();
+		String queryString  = "SELECT ?categoryName WHERE " +
+				              "{ ?c <http://example.org/ofType> <http://example.org/category> . " +  
+				              "  ?c <http://dbpedia.org/property/name> ?name . " +
+				              "  ?c <http://dbpedia.org/property/name> ?categoryName  . " +
+				              "}";		
+		System.out.println(queryString);
+		Set<String> categorySet = new HashSet<String>();
+		TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+    	  TupleQueryResult result = tupleQuery.evaluate();
+    	  try {
+    		  List<String> bindingNames = result.getBindingNames();
+    		  if(bindingNames.size()==0)
+    			  return null;
+    		  while (result.hasNext()) {
+    		     BindingSet bindingSet = result.next();
+    		     categorySet.add(bindingSet.getValue(bindingNames.get(0)).toString());
+    		  }
+    	  }
+	  	  finally{
+	  	      result.close();
+	  	  }
+		return categorySet;
+	}
+	
+	public static HashMap<University,String> getUnivGivenCategory(String category) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
+		repo = new HTTPRepository(sesameServer, repositoryID);
+		repo.initialize();
+		RepositoryConnection con = repo.getConnection();
+		String queryString  = "SELECT ?u WHERE " +
+				              "{ ?u <http://example.org/hasCourse> ?course . " +  
+				              "  ?course <http://example.org/ofType> ?cat . " +
+				              "  ?course <http://example.org/hasRank> ?rank . " +
+				              "  ?cat <http://example.org/ofType> <http://example.org/category>  . " +
+				              "  ?cat <http://dbpedia.org/property/name> \"" + category + "\" . " + 
+				              "} order by ?rank";		
+		System.out.println(queryString);
+		HashMap<University,String> universityRankMap = new HashMap<University,String>();
+		TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+    	  TupleQueryResult result = tupleQuery.evaluate();
+    	  try {
+    		  List<String> bindingNames = result.getBindingNames();
+    		  if(bindingNames.size()==0)
+    			  return null;
+    		  while (result.hasNext()) {
+    		     String URI = bindingNames.get(0).toString();
+    		     String name = bindingNames.get(1).toString();
+    		     String country = bindingNames.get(2).toString();
+    		     String city = bindingNames.get(3).toString();
+    		     String state = bindingNames.get(4).toString();
+    		     University u = new University( URI, name, country, city, state, false);
+    		     String rank = bindingNames.get(5).toString();
+    		     universityRankMap.put(u, rank);    		     
+    		  }
+    	  }
+	  	  finally{
+	  	      result.close();
+	  	  }
+		return universityRankMap;
 	}
 }

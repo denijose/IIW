@@ -2,6 +2,8 @@ package com.iiw.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,10 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.openrdf.query.MalformedQueryException;
+import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.repository.RepositoryException;
 
+import com.google.gson.Gson;
 import com.iiw.entities.*;
 import com.iiw.rdf.Manage;
+import com.iiw.rdf.Sparql;
 
 /**
  * Servlet implementation class Form
@@ -62,10 +68,36 @@ public class Form extends HttpServlet {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		Set<String> categorySet = new HashSet<String>();
+		try {
+			categorySet = Sparql.getAllCategories();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		categorySet = removeQuotes(categorySet);
+		String categoryJSON = gson.toJson(categorySet);
+		System.out.println(categoryJSON);
 		RequestDispatcher rd = request.getRequestDispatcher("/fillform.jsp");  
 		request.setAttribute("name",userName );
+		request.setAttribute("categoryJSON", categoryJSON);
         rd.forward(request, response);
 		
+	}
+	
+	private Set<String> removeQuotes(Set<String> categorySet){
+		Set<String> newSet = new HashSet<String>();
+		for(String s:categorySet){
+			newSet.add(s.replaceAll("\"", ""));
+		}
+		return newSet;
 	}
 
 }

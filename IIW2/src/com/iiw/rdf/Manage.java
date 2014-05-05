@@ -260,11 +260,9 @@ public class Manage {
 			Literal courseName = f.createLiteral(course.getName());
 			con.add(courseURI, ofType, categoryURI);
 			con.add(courseURI, name, courseName);			
-			if(course.getRank()!=-1){
-				if(subCourse.getRank()==-1){
-					Literal courseRank = f.createLiteral(course.getRank());
-					con.add(courseURI, hasRank, courseRank);
-				}
+			if(subCourse==null && course.getRank()!=-1){		
+				Literal courseRank = f.createLiteral(course.getRank());
+					con.add(courseURI, hasRank, courseRank);				
 			}
 			if(course.getFeesInstate()!=-1){
 				Literal courseFeesInstate = f.createLiteral(course.getFeesInstate());
@@ -284,6 +282,7 @@ public class Manage {
 			
 			//create the subcourse if exists
 			if(subCourse!=null){
+				
 				URI subCourseURI = f.createURI(subCourse.getURI());
 				Literal subCourseName = f.createLiteral(subCourse.getName());
 				con.add(subCourseURI, ofType, subCategoryURI);
@@ -291,10 +290,7 @@ public class Manage {
 				if(subCourse.getRank()!=-1){
 					Literal subCourseRank = f.createLiteral(subCourse.getRank());
 					con.add(subCourseURI, hasRank, subCourseRank);
-				} else {
-					Literal courseRank = f.createLiteral(course.getRank());
-					con.add(courseURI, hasRank, courseRank);
-				}
+				} 
 				if(subCourse.getFeesInstate()!=-1){
 					Literal subCourseFeesInstate = f.createLiteral(subCourse.getFeesInstate());
 					con.add(subCourseURI, hasFeesInstate, subCourseFeesInstate);
