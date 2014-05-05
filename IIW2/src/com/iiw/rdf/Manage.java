@@ -143,8 +143,8 @@ public class Manage {
 	    for(Student s : univ.getWaitingStudents())
 	    	createStudentUniversityConnection(USNewsUnivBean,s,"isWaiting");
 		
-	    if(univ.getNumOfAdimts() != -1){
-	    	Literal numOfAdimtsLiteral = f.createLiteral(univ.getNumOfAdimts());
+	    if(univ.getNumOfAdmits() != -1){
+	    	Literal numOfAdimtsLiteral = f.createLiteral(univ.getNumOfAdmits());
 	    	con.add(UnivURI, numOfAdimts, numOfAdimtsLiteral);
 	    }
 	    if(univ.getNumOfRejects() != -1){
@@ -169,7 +169,7 @@ public class Manage {
 		URI studentURI = f.createURI(s.getURI());
 		URI name = f.createURI("http://dbpedia.org/property/name");
 		URI GREScore = f.createURI("http://dbpedia.org/property/GREScore");
-		URI age = f.createURI("http://dbpedia.org/property/age");
+		URI age = f.createURI("http://dbpedia.org/property/age");  // --> Replace age with undergradScore
 		URI stream = f.createURI("http://dbpedia.org/property/stream");
 		RepositoryConnection con = repo.getConnection();	
 		
@@ -177,16 +177,16 @@ public class Manage {
 		con.add(studentURI, ofType, person);
 	    con.add(studentURI, name, studentName);	    
 	    
-	    if(s.getGreScore()!=-1 || s.getGreScore()!= null ){
-	    	Literal GREScoreLiteral = f.createLiteral(s.getGreScore());	
+	    if(s.getGreQScore()!=-1 || s.getGreQScore()!= null ){
+	    	Literal GREScoreLiteral = f.createLiteral(s.getGreQScore());	
 	    	con.add(studentURI, GREScore, GREScoreLiteral);
 	    }
-	    if(s.getAge()!=-1 || s.getAge()!= null ){
-	    	Literal ageLiteral = f.createLiteral(s.getGreScore());	
+	    if(s.getUndergradScore()!=-1 || s.getUndergradScore()!= null ){
+	    	Literal ageLiteral = f.createLiteral(s.getGreQScore());	
 	    	con.add(studentURI, age, ageLiteral);
 	    }
-	    if(s.getStream()!= null){
-	    	Literal streamLiteral = f.createLiteral(s.getGreScore());	
+	    if(s.getDetails()!= null){
+	    	Literal streamLiteral = f.createLiteral(s.getGreQScore());	
 	    	con.add(studentURI, stream, streamLiteral);
 	    }
 	    con.close();

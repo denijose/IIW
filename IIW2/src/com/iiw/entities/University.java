@@ -12,9 +12,10 @@ public class University {
 	private String state;
 	private String acceptanceLevel;	
 	private Boolean isFunded;
+	private String reviews;
 	
 	//for edulix uiversities
-	private int numOfAdimts;	
+	private int numOfAdmits;	
 	private int numOfRejects;
 	private int numOfWaiting;
 	private ArrayList<Student> acceptedStudents;
@@ -30,7 +31,7 @@ public class University {
 		this.city = null;
 		this.state = null;		
 		this.isFunded = null;
-		this.numOfAdimts = -1;
+		this.numOfAdmits = -1;
 		this.numOfRejects = -1;
 		this.numOfWaiting = -1;
 		this.acceptedStudents = null;;
@@ -130,12 +131,12 @@ public class University {
 	}
 
 	
-	public int getNumOfAdimts() {
-		return numOfAdimts;
+	public int getNumOfAdmits() {
+		return numOfAdmits;
 	}
 
-	public void setNumOfAdimts(int numOfAdimts) {
-		this.numOfAdimts = numOfAdimts;
+	public void setNumOfAdmits(int numOfAdmits) {
+		this.numOfAdmits = numOfAdmits;
 	}
 
 	public int getNumOfRejects() {
@@ -178,6 +179,12 @@ public class University {
 		this.waitingStudents = waitingStudents;
 	}
 
+	public void setReviews(String reviews) {
+		this.reviews = reviews;
+	}
 	
+	public String getReviews() {
+		return this.reviews;
+	}
 	
 }

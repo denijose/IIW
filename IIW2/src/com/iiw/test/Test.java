@@ -25,7 +25,9 @@ public class Test {
 	public static void main(String[] args) throws RepositoryException, IOException, MalformedQueryException, QueryEvaluationException {
 		//Admin.createUniversities();
 		//Manage.createUniversity(new University("http://www.edulix.com/unisearch/univreview.php?stid=36&univid=37","Alliant International University",null,null,null,null,null));
-		Manage.test();
+		//Manage.test();
+		String multiline = "Hello"+"\n"+"Multiline"+"\n"+"third line";
+		System.out.println(multiline);
 	}
 
 }
