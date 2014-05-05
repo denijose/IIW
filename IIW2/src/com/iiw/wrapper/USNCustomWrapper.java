@@ -2,6 +2,7 @@ package com.iiw.wrapper;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -17,7 +18,80 @@ import com.iiw.entities.*;
 import com.iiw.rdf.*;
 
 public class USNCustomWrapper {
-	
+	public static HashMap<String, String> states = new HashMap<String, String>() {{
+		states.put("AL","Alabama");
+		states.put("AK","Alaska");
+		states.put("AB","Alberta");
+		states.put("AS","American Samoa");
+		states.put("AZ","Arizona");
+		states.put("AR","Arkansas");
+		states.put("AE","Armed Forces (AE)");
+		states.put("AA","Armed Forces Americas");
+		states.put("AP","Armed Forces Pacific");
+		states.put("BC","British Columbia");
+		states.put("CA","California");
+		states.put("CO","Colorado");
+		states.put("CT","Connecticut");
+		states.put("DE","Delaware");
+		states.put("DC","District Of Columbia");
+		states.put("FL","Florida");
+		states.put("GA","Georgia");
+		states.put("GU","Guam");
+		states.put("HI","Hawaii");
+		states.put("ID","Idaho");
+		states.put("IL","Illinois");
+		states.put("IN","Indiana");
+		states.put("IA","Iowa");
+		states.put("KS","Kansas");
+		states.put("KY","Kentucky");
+		states.put("LA","Louisiana");
+		states.put("ME","Maine");
+		states.put("MB","Manitoba");
+		states.put("MD","Maryland");
+		states.put("MA","Massachusetts");
+		states.put("MI","Michigan");
+		states.put("MN","Minnesota");
+		states.put("MS","Mississippi");
+		states.put("MO","Missouri");
+		states.put("MT","Montana");
+		states.put("NE","Nebraska");
+		states.put("NV","Nevada");
+		states.put("NB","New Brunswick");
+		states.put("NH","New Hampshire");
+		states.put("NJ","New Jersey");
+		states.put("NM","New Mexico");
+		states.put("NY","New York");
+		states.put("NF","Newfoundland");
+		states.put("NC","North Carolina");
+		states.put("ND","North Dakota");
+		states.put("NT","Northwest Territories");
+		states.put("NS","Nova Scotia");
+		states.put("NU","Nunavut");
+		states.put("OH","Ohio");
+		states.put("OK","Oklahoma");
+		states.put("ON","Ontario");
+		states.put("OR","Oregon");
+		states.put("PA","Pennsylvania");
+		states.put("PE","Prince Edward Island");
+		states.put("PR","Puerto Rico");
+		states.put("PQ","Quebec");
+		states.put("RI","Rhode Island");
+		states.put("SK","Saskatchewan");
+		states.put("SC","South Carolina");
+		states.put("SD","South Dakota");
+		states.put("TN","Tennessee");
+		states.put("TX","Texas");
+		states.put("UT","Utah");
+		states.put("VT","Vermont");
+		states.put("VI","Virgin Islands");
+		states.put("VA","Virginia");
+		states.put("WA","Washington");
+		states.put("WV","West Virginia");
+		states.put("WI","Wisconsin");
+		states.put("WY","Wyoming");
+		states.put("YT","Yukon Territory");
+	}};
+	 
 	public USNCustomWrapper() throws IOException {
 			// Initialize all the categories and specialities
 			getOptions("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/search?spp=50&program=");
@@ -34,7 +108,7 @@ public class USNCustomWrapper {
 			Set<Category> subCats = getSpecialities(url+c.attr("value"));
 			
 			// Remove hardcode
-			if (cat.getURI().contains("top-computer-science-schools")){
+			//if (cat.getURI().contains("top-computer-science-schools")){
 			
 			try {
 				Manage.createCategoryAndSubCategories(cat, subCats);
@@ -43,8 +117,8 @@ public class USNCustomWrapper {
 				System.out.println("Exception: RDF didn't like us.\n\n"+re.toString());
 			}
 			// REMOVE THE BREAK TO UNLEASH THE PROGRAM!
-			break;
-			}
+			//break;
+			//}
 		}
 		//System.out.println(categories.attr("value")+"\t"+categories.text()+"\n");
 	}
@@ -78,7 +152,7 @@ public class USNCustomWrapper {
 			for (Category c : subCats) {
 				wrap(c.getURI(),true, cat, c);
 				// REMOVE THE BREAK TO UNLEASH
-				break;
+				//break;
 			}
 		} else {
 			wrapScienceAndArts(uri, false, cat, null);
@@ -137,6 +211,7 @@ public class USNCustomWrapper {
     		schoolName = column0.get(i).select(".schoolname").text();
         	location = column0.get(i).select(".citystate").text();
         	cityState = location.split(", ");  // splitting city and state
+        	cityState[1] = states.get(cityState[1]);
         	rankString = column1.get(i).text(); // #21 or Unranked or ...
         	costString = column3.get(i).text(); //$11,220 per year (in-state, full-time); $26,322 per year (out-of-state, full-time)
         	
@@ -225,6 +300,7 @@ public class USNCustomWrapper {
 			schoolName = uni.select(".schoolname").text();
 			location = uni.select(".citystate").text();
 			String cityState[] = location.split(", ");
+			cityState[1] = states.get(cityState[1]);
 			rankString = row.select("td").last().text();
 			rank = 0;
 			try {

@@ -4,28 +4,28 @@ public class Student {
 
 	private String URI;
 	private String name;
-	private Integer age;
-	private String stream;
-	private Integer greScore;
+	private Double undergradScore;
+	private String details;
+	private Integer greQScore;
 	private Integer toeflScore;
 	
 	public Student(){
 		this.URI = null;
 		this.name = null;
-		this.age = null;
-		this.stream = null;
-		this.greScore = null;
+		this.undergradScore = null;
+		this.details = null;
+		this.greQScore = null;
 		this.toeflScore = null;
 	}
 	
-	public Student(String URI,String name, Integer age, String stream, Integer greScore,
+	public Student(String URI,String name, Double undergradScore, String details, Integer greQScore,
 			Integer toeflScore) {
 		super();
 		this.URI = URI;
 		this.name = name;
-		this.age = age;
-		this.stream = stream;
-		this.greScore = greScore;
+		this.undergradScore = undergradScore;
+		this.details = details;
+		this.greQScore = greQScore;
 		this.toeflScore = toeflScore;
 	}
 	
@@ -45,28 +45,28 @@ public class Student {
 		this.name = name;
 	}
 
-	public Integer getAge() {
-		return age;
+	public Double getUndergradScore() {
+		return undergradScore;
 	}
 
-	public void setAge(Integer age) {
-		this.age = age;
+	public void setUndergradScore(Double undergradScore) {
+		this.undergradScore = undergradScore;
 	}
 
-	public String getStream() {
-		return stream;
+	public String getDetails() {
+		return details;
 	}
 
-	public void setStream(String stream) {
-		this.stream = stream;
+	public void setDetails(String details) {
+		this.details = details;
 	}
 
-	public Integer getGreScore() {
-		return greScore;
+	public Integer getGreQScore() {
+		return greQScore;
 	}
 
-	public void setGreScore(Integer greScore) {
-		this.greScore = greScore;
+	public void setGreQScore(Integer greQScore) {
+		this.greQScore = greQScore;
 	}
 
 	public Integer getToeflScore() {
