@@ -15,9 +15,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openrdf.query.MalformedQueryException;
+import org.openrdf.query.QueryEvaluationException;
+import org.openrdf.repository.RepositoryException;
 
 import com.iiw.entities.University;
 import com.iiw.entities.Student;
+import com.iiw.rdf.Manage;
 
 public class EduScraper {
 	
@@ -140,7 +144,18 @@ public class EduScraper {
     	for (Element e : selection) {
     		System.out.println(e.attr("href")+", "+e.text()+", "+e);
     	}*/
-    	
+    	try {
+			Manage.createEdulixUniversity(edulixUni);
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	System.out.println(edulixUni.getAcceptedStudents().get(0).getDetails());
    
 	}
@@ -150,10 +165,10 @@ public class EduScraper {
 		currentStudent.setURI(url);
 		currentStudent.setName(name);
 		
-		int greQScore, toeflScore; 
-		double undergradScore;
-		greQScore = toeflScore = 0;
-		undergradScore = 0.0;
+		int greQScore, greVScore, toeflScore; 
+		double undergradScore, greAScore;
+		greQScore = greVScore = toeflScore = 0;
+		undergradScore = greAScore = 0.0;
 		String details = "";
 		
 		String temp;
@@ -169,8 +184,13 @@ public class EduScraper {
 					//System.out.println("Quantitative: "+td.get(2).text());
 					if (!temp.equals(""))
 						greQScore = Integer.parseInt(temp);
-					//temp = td.get(4).text();
+					temp = td.get(4).text();
+					if (!temp.equals(""))
+						greVScore = Integer.parseInt(temp);
 					//System.out.println("Verbal: "+td.get(4).text());
+					temp = td.get(6).text();
+					if (!temp.equals(""))
+						greAScore = Double.parseDouble(temp);
 					//System.out.println("AWA: "+td.get(6).text());
 				}
 				
@@ -194,6 +214,8 @@ public class EduScraper {
 		//System.out.println("User Details: "+lastRow.text());
 		details = lastRow.text();
 		currentStudent.setGreQScore(greQScore);
+		currentStudent.setGreVScore(greVScore);
+		currentStudent.setGreAScore(greAScore);
 		currentStudent.setToeflScore(toeflScore);
 		currentStudent.setUndergradScore(undergradScore);
 		currentStudent.setDetails(details);

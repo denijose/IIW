@@ -7,6 +7,8 @@ public class Student {
 	private Double undergradScore;
 	private String details;
 	private Integer greQScore;
+	private Integer greVScore;
+	private Double greAScore;
 	private Integer toeflScore;
 	
 	public Student(){
@@ -15,17 +17,21 @@ public class Student {
 		this.undergradScore = null;
 		this.details = null;
 		this.greQScore = null;
+		this.greVScore = null;
+		this.greAScore = null;
 		this.toeflScore = null;
 	}
 	
-	public Student(String URI,String name, Double undergradScore, String details, Integer greQScore,
-			Integer toeflScore) {
+	public Student(String URI,String name, Double undergradScore, String details, Integer greQScore, Integer greVScore,
+			Double greAScore, Integer toeflScore) {
 		super();
 		this.URI = URI;
 		this.name = name;
 		this.undergradScore = undergradScore;
 		this.details = details;
 		this.greQScore = greQScore;
+		this.greVScore = greVScore;
+		this.greAScore = greAScore;
 		this.toeflScore = toeflScore;
 	}
 	
@@ -69,6 +75,22 @@ public class Student {
 		this.greQScore = greQScore;
 	}
 
+	public Integer getGreVScore() {
+		return greVScore;
+	}
+
+	public void setGreVScore(Integer greVScore) {
+		this.greVScore = greVScore;
+	}
+	
+	public Double getGreAScore() {
+		return greAScore;
+	}
+
+	public void setGreAScore(Double greAScore) {
+		this.greAScore = greAScore;
+	}
+	
 	public Integer getToeflScore() {
 		return toeflScore;
 	}
