@@ -47,7 +47,9 @@
 			  {
 			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 			    {
+			    //alert(xmlhttp.responseText);
 				  var json = JSON.parse(xmlhttp.responseText);
+				  //alert(json.Details[0].Rank);
 				  showResults(json);
 			    }
 			  }
@@ -62,13 +64,22 @@
 			}
 	
 			function showResults(json){
+			     document.getElementById("tableDiv").innerHTML = "";
 				 var table = document.createElement('table');
 				 table.className = "table table-striped table-hover";
-				 table.innerHTML = "<tr><td>Rank</td><td>University</td><td>Fees</td></tr>";
-				for(var i=0;i<5;i++){		
-					 table.innerHTML += "<tr><td>"+i+"</td><td>"+json[i].name+"</td><td>50</td></tr>";				     
+				 table.innerHTML = "<tr><td>Rank</td><td>University</td><td>Details</td></tr>";
+				for(var i=0;i<json.Details.length;i++){		
+					 var rank =  json.Details[i].Rank;
+					 var University = json.Details[i].University;
+					 var hiddenDetails = document.createElement("INPUT");
+					 hiddenDetails.setAttribute("type","hidden");
+					 var details = University.name+","+University.state+","+University.city+","+University.numOfWaiting+","+University.numOfAdmits+","+University.numOfRejects+","+University.URI;
+					 hiddenDetails.setAttribute("value",details);
+					 hiddenDetails.setAttribute("id",University.URI);
+					 document.body.appendChild(hiddenDetails);
+					 table.innerHTML += "<tr><td>"+rank+"</td><td>"+University.name+"</td><td  onClick='showDetails("+University.URI+");'><img src='adsds'></td></tr>";				     
 				}
-				table.innerHTML += 
+				//table.innerHTML += 
 				document.getElementById("tableDiv").appendChild(table);
 			}
 			
@@ -92,7 +103,9 @@
 				}
 	 		}
 				
-
+           function showDetails(University){           	
+           	alert(document.getElementById("u").value);
+           }
 		</script>
 
     

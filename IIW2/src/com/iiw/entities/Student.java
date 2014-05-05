@@ -1,7 +1,7 @@
 package com.iiw.entities;
-
+import com.google.gson.annotations.SerializedName;
 public class Student {
-
+	@SerializedName("Student")
 	private String URI;
 	private String name;
 	private Double undergradScore;

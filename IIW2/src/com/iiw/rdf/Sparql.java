@@ -2,6 +2,7 @@ package com.iiw.rdf;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -153,8 +154,7 @@ public class Sparql {
 	  	  }
 		return univ;
 	}
-	
-	
+		
 	public static Set<String> getAllCategories() throws RepositoryException, MalformedQueryException, QueryEvaluationException{
 		repo = new HTTPRepository(sesameServer, repositoryID);
 		repo.initialize();
@@ -183,34 +183,42 @@ public class Sparql {
 		return categorySet;
 	}
 	
-	public static HashMap<University,String> getUnivGivenCategory(String category) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
+	public static LinkedHashMap<University,String> getUnivGivenCategory(String category) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
 		repo = new HTTPRepository(sesameServer, repositoryID);
 		repo.initialize();
 		RepositoryConnection con = repo.getConnection();
-		String queryString  = "SELECT ?u WHERE " +
-				              "{ ?u <http://example.org/hasCourse> ?course . " +  
+		String queryString  = "SELECT ?u ?name ?country ?city ?state ?rank WHERE " +
+				              "{ ?u <http://example.org/ofType> <http://dbpedia.org/ontology/EducationalInstitution> ." +
+				              "  ?u <http://dbpedia.org/property/name> ?name . " +
+				              "  OPTIONAL { ?u  <http://dbpedia.org/property/country> ?country} . " +
+				              "  OPTIONAL { ?u  <http://dbpedia.org/property/city> ?city} . " +
+				              "  OPTIONAL { ?u  <http://dbpedia.org/property/state> ?state} . " +
+				              "  ?u <http://example.org/hasCourse> ?course . " +  
 				              "  ?course <http://example.org/ofType> ?cat . " +
 				              "  ?course <http://example.org/hasRank> ?rank . " +
 				              "  ?cat <http://example.org/ofType> <http://example.org/category>  . " +
 				              "  ?cat <http://dbpedia.org/property/name> \"" + category + "\" . " + 
 				              "} order by ?rank";		
 		System.out.println(queryString);
-		HashMap<University,String> universityRankMap = new HashMap<University,String>();
+		LinkedHashMap<University,String> universityRankMap = new LinkedHashMap<University,String>();
 		TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
     	  TupleQueryResult result = tupleQuery.evaluate();
     	  try {
     		  List<String> bindingNames = result.getBindingNames();
     		  if(bindingNames.size()==0)
     			  return null;
-    		  while (result.hasNext()) {
-    		     String URI = bindingNames.get(0).toString();
-    		     String name = bindingNames.get(1).toString();
-    		     String country = bindingNames.get(2).toString();
-    		     String city = bindingNames.get(3).toString();
-    		     String state = bindingNames.get(4).toString();
+    		  int noOfResults = 0;
+    		  while (result.hasNext() && noOfResults < 20) {
+    			  BindingSet bindingSet = result.next();
+    		     String URI = bindingSet.getValue(bindingNames.get(0).toString()).toString();
+    		     String name = bindingSet.getValue(bindingNames.get(1).toString()).toString();
+    		     String country = bindingSet.getValue(bindingNames.get(2).toString()).toString();
+    		     String city = bindingSet.getValue(bindingNames.get(3).toString()).toString();
+    		     String state = bindingSet.getValue(bindingNames.get(4).toString()).toString();
     		     University u = new University( URI, name, country, city, state, false);
-    		     String rank = bindingNames.get(5).toString();
-    		     universityRankMap.put(u, rank);    		     
+    		     String rank = bindingSet.getValue(bindingNames.get(5).toString()).toString();
+    		     universityRankMap.put(u, rank);    
+    		     noOfResults++;
     		  }
     	  }
 	  	  finally{

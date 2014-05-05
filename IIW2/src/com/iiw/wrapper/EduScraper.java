@@ -98,11 +98,11 @@ public class EduScraper {
     		String studURI = "http://www.edulix.com/unisearch/"+a.attr("href");
     		
     		// Remove to unleash
-    		if (a.text().equals("aswinasar")) {
+    		//if (a.text().equals("aswinasar")) {
     			System.out.println(studURI+" "+a.text());
     			currentStudent = studentPageParser(studURI, a.text());
     			acceptedStudents.add(currentStudent);
-    		}
+    		//}
     	}
     	edulixUni.setAcceptedStudents(acceptedStudents);
     	
@@ -112,11 +112,11 @@ public class EduScraper {
     		Student currentStudent = new Student();
     		String studURI = "http://www.edulix.com/unisearch/"+r.attr("href");
     		//Remove to unleash
-    		if (r.text().equals("joshi")) {
+    		//if (r.text().equals("joshi")) {
     			System.out.println(studURI+" "+r.text());
     			currentStudent = studentPageParser(studURI, r.text());
     			rejectedStudents.add(currentStudent);
-    		}
+    		//}
     	}
     	edulixUni.setRejectedStudents(rejectedStudents);
     	

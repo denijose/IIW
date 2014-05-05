@@ -1,7 +1,9 @@
 package com.iiw.entities;
 
+import com.google.gson.annotations.SerializedName;
 public class Category {
 	
+	@SerializedName("Category")
 	private  String URI;
 	private  String name;
 	

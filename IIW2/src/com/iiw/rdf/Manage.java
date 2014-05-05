@@ -230,6 +230,7 @@ public class Manage {
 		ValueFactory f = repo.getValueFactory();	
 		URI ofType = f.createURI("http://example.org/ofType");
 		URI categoryClass = f.createURI("http://example.org/category");
+		URI subCategoryClass = f.createURI("http://example.org/subCategory");
 		URI categoryURI = f.createURI(c.getURI());
 		URI name = f.createURI("http://dbpedia.org/property/name");
 		URI hasSubCategory = f.createURI("http://example.org/hasSubCategory");
@@ -241,7 +242,7 @@ public class Manage {
 	    for(Category subCategory : subCategories){
 	    	URI subCategoryURI = f.createURI(subCategory.getURI());
 	    	Literal subCategoryName = f.createLiteral(subCategory.getName());	
-	    	con.add(subCategoryURI, ofType, categoryClass);
+	    	con.add(subCategoryURI, ofType, subCategoryClass);
 	    	con.add(subCategoryURI, name, subCategoryName);	 
 	    	con.add(categoryURI, hasSubCategory, subCategoryURI);	    	
 	    }

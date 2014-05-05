@@ -1,7 +1,7 @@
 package com.iiw.entities;
-
+import com.google.gson.annotations.SerializedName;
 public class Course {
-	
+	@SerializedName("Course")
 	private int rank;
 	private int feesInstate;
 	private int feesOutState;

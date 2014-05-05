@@ -2,8 +2,11 @@ package com.iiw.entities;
 
 import java.util.ArrayList;
 
+import com.google.gson.annotations.SerializedName;
+
 public class University {
   
+	@SerializedName("University")
 	private String URI;
 	private String name;
 	private String type;
@@ -187,4 +190,5 @@ public class University {
 		return this.reviews;
 	}
 	
+
 }
