@@ -75,7 +75,7 @@ public class Sparql {
     		  while (result.hasNext()) {
     		     BindingSet bindingSet = result.next();
     		     Value valueOfX = bindingSet.getValue(bindingNames.get(0));
-    		     System.out.println(valueOfX.toString());
+    		    // System.out.println(valueOfX.toString());
     		     universities.add(valueOfX.toString());
     		  }
     	  }
@@ -89,16 +89,16 @@ public class Sparql {
 	public static String getUniversityWithName(String universityName) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
 		String university = new String();
 		Set<String> universities = getAllUniversities();
-		int levDistance = (int) Float.POSITIVE_INFINITY;
+		double jacDistance = (int) Float.NEGATIVE_INFINITY;
 		for( String univ : universities){
-			int distance;
-			if( (distance = Util.computeLevenshteinDistance(universityName, univ)) < levDistance){
-				levDistance = distance;
+			double distance;
+			if( (distance = Util.jaccardSimilarity(universityName, univ)) > jacDistance){
+				jacDistance = distance;
 				university = univ;
 			}
 		}
 			
-		System.out.println(university);
+		System.out.println("selected by Jaccard - " + university);
 		return university;
 	}
 	
@@ -110,7 +110,7 @@ public class Sparql {
 		String state;
 		
 		if ((name==null) || (name.equals(""))) {
-			System.out.println("Levenshtein Failed for "+universityName);
+			System.out.println("Jaccard Failed for "+universityName);
 			return null;
 		}
 		repo = new HTTPRepository(sesameServer, repositoryID);

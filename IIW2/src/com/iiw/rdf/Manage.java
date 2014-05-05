@@ -140,8 +140,8 @@ public class Manage {
 	    for(Student s : univ.getRejectedStudents())
 	    	createStudentUniversityConnection(USNewsUnivBean,s,"hasReject");
 		
-	    for(Student s : univ.getWaitingStudents())
-	    	createStudentUniversityConnection(USNewsUnivBean,s,"isWaiting");
+	   // for(Student s : univ.getWaitingStudents())
+	   // 	createStudentUniversityConnection(USNewsUnivBean,s,"isWaiting");
 		
 	    if(univ.getNumOfAdmits() != -1){
 	    	Literal numOfAdimtsLiteral = f.createLiteral(univ.getNumOfAdmits());
@@ -168,9 +168,12 @@ public class Manage {
 		URI person = f.createURI("http://dbpedia.org/ontology/person");
 		URI studentURI = f.createURI(s.getURI());
 		URI name = f.createURI("http://dbpedia.org/property/name");
-		URI GREScore = f.createURI("http://dbpedia.org/property/GREScore");
-		URI age = f.createURI("http://dbpedia.org/property/age");  // --> Replace age with undergradScore
-		URI stream = f.createURI("http://dbpedia.org/property/stream");
+		URI GREQScore = f.createURI("http://dbpedia.org/property/GREQScore");
+		URI GREVScore = f.createURI("http://dbpedia.org/property/GREVScore");
+		URI GREAScore = f.createURI("http://dbpedia.org/property/GREAScore");
+		URI ToeflScore = f.createURI("http://dbpedia.org/property/ToeflScore");
+		URI undergradScore = f.createURI("http://dbpedia.org/property/undergradScore");  // --> Replace age with undergradScore
+		URI details = f.createURI("http://dbpedia.org/property/details");
 		RepositoryConnection con = repo.getConnection();	
 		
 		Literal studentName = f.createLiteral(s.getName());				
@@ -178,16 +181,28 @@ public class Manage {
 	    con.add(studentURI, name, studentName);	    
 	    
 	    if(s.getGreQScore()!=-1 || s.getGreQScore()!= null ){
-	    	Literal GREScoreLiteral = f.createLiteral(s.getGreQScore());	
-	    	con.add(studentURI, GREScore, GREScoreLiteral);
+	    	Literal GreQScoreLiteral = f.createLiteral(s.getGreQScore());	
+	    	con.add(studentURI, GREQScore, GreQScoreLiteral);
+	    }
+	    if(s.getGreVScore()!=-1 || s.getGreVScore()!= null ){
+	    	Literal GreVScoreLiteral = f.createLiteral(s.getGreVScore());	
+	    	con.add(studentURI, GREVScore, GreVScoreLiteral);
+	    }
+	    if(s.getGreAScore()!=-1 || s.getGreAScore()!= null ){
+	    	Literal GreAScoreLiteral = f.createLiteral(s.getGreAScore());	
+	    	con.add(studentURI, GREAScore, GreAScoreLiteral);
+	    }
+	    if(s.getToeflScore()!=-1 || s.getToeflScore()!= null ){
+	    	Literal ToeflScoreLiteral = f.createLiteral(s.getToeflScore());	
+	    	con.add(studentURI, ToeflScore, ToeflScoreLiteral);
 	    }
 	    if(s.getUndergradScore()!=-1 || s.getUndergradScore()!= null ){
-	    	Literal ageLiteral = f.createLiteral(s.getGreQScore());	
-	    	con.add(studentURI, age, ageLiteral);
+	    	Literal undergradScoreLiteral = f.createLiteral(s.getUndergradScore());	
+	    	con.add(studentURI, undergradScore, undergradScoreLiteral);
 	    }
 	    if(s.getDetails()!= null){
-	    	Literal streamLiteral = f.createLiteral(s.getGreQScore());	
-	    	con.add(studentURI, stream, streamLiteral);
+	    	Literal detailsLiteral = f.createLiteral(s.getDetails());	
+	    	con.add(studentURI, details, detailsLiteral);
 	    }
 	    con.close();
 	}

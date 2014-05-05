@@ -27,6 +27,10 @@ public class Test {
 		//Manage.createUniversity(new University("http://www.edulix.com/unisearch/univreview.php?stid=36&univid=37","Alliant International University",null,null,null,null,null));
 		//Manage.test();
 		String multiline = "Hello"+"\n"+"Multiline"+"\n"+"third line";
+		System.out.println(Util.jaccardSimilarity("University of Southern California", "University of Southern California - Computer Science Department"));
+		System.out.println(Util.jaccardSimilarity("University of Southern California", "University of Utah - School of Computing"));
+		System.out.println(Util.jaccardSimilarity("University of Southern California", "University of Southern Calipornia"));
+		
 		System.out.println(multiline);
 	}
 
