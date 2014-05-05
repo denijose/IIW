@@ -127,11 +127,15 @@ public class Manage {
 		repo = new HTTPRepository(sesameServer, repositoryID);
 		repo.initialize();		
 		ValueFactory f = repo.getValueFactory();	
-		URI UnivURI = f.createURI(univ.getURI());		
-		URI numOfAdimts = f.createURI("http://example.org/numOfAdimts");
-		URI numOfRejects = f.createURI("http://example.org/numOfAdimts");
+		URI UnivURI = f.createURI(USNewsUnivBean.getURI());	
+		URI edulixName = f.createURI("http://example.org/edulixName");	
+		URI numOfAdmits = f.createURI("http://example.org/numOfAdmits");
+		URI numOfRejects = f.createURI("http://example.org/numOfRejects");
 		URI numOfWaiting = f.createURI("http://example.org/numOfWaiting");
 		RepositoryConnection con = repo.getConnection();
+		
+		Literal edulixNameLiteral = f.createLiteral(univ.getName());
+    	con.add(UnivURI, edulixName, edulixNameLiteral);
 		
 	    for(Student s : univ.getAcceptedStudents())
 	    	createStudentUniversityConnection(USNewsUnivBean,s,"hasAdmit");
@@ -144,8 +148,8 @@ public class Manage {
 	   // 	createStudentUniversityConnection(USNewsUnivBean,s,"isWaiting");
 		
 	    if(univ.getNumOfAdmits() != -1){
-	    	Literal numOfAdimtsLiteral = f.createLiteral(univ.getNumOfAdmits());
-	    	con.add(UnivURI, numOfAdimts, numOfAdimtsLiteral);
+	    	Literal numOfAdmitsLiteral = f.createLiteral(univ.getNumOfAdmits());
+	    	con.add(UnivURI, numOfAdmits, numOfAdmitsLiteral);
 	    }
 	    if(univ.getNumOfRejects() != -1){
 	    	Literal numOfRejectsLiteral = f.createLiteral(univ.getNumOfRejects());
