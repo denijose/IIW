@@ -120,7 +120,7 @@ public class Manage {
 	public static void createEdulixUniversity(University univ) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
 		University USNewsUnivBean = null;
 		if(univ.getURI().contains("dulix")){
-		   if( (USNewsUnivBean = Sparql.getUniversityBean(univ.getName())) == null )
+		   if( (USNewsUnivBean = Sparql.getUniversityBean(univ.getName(),univ.getState())) == null )
 			   return;
 		}
 		

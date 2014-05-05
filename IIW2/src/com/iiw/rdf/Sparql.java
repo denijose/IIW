@@ -103,8 +103,62 @@ public class Sparql {
 		return university;
 	}
 	
-	public static University getUniversityBean(String universityName) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
-		String name = getUniversityWithName(universityName);
+	public static String getUniversityWithState(String universityName,String state) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
+		String university = new String();
+		Set<String> universities = getStateUniversities(state);
+		double jacDistance = (int) Float.NEGATIVE_INFINITY;
+		for( String univ : universities){
+			double distance;
+			if( (distance = Util.jaccardSimilarity(universityName, univ)) > jacDistance){
+				jacDistance = distance;
+				university = univ;
+			}
+		}
+			
+		System.out.println("selected by Jaccard - " + university);
+		return university;
+	}
+	private static Set<String> getStateUniversities(String state) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+		Set<String> universities = new HashSet<String>();
+		repo = new HTTPRepository(sesameServer, repositoryID);
+		repo.initialize();
+		RepositoryConnection con = repo.getConnection();con = repo.getConnection();
+		String p = "<http://example.org/ofType>";
+		String o = "<http://dbpedia.org/ontology/EducationalInstitution>";
+		String queryString  = "SELECT ?name WHERE " +
+				 		       " { ?x " + p + " " + o + "." +
+				 		       "   ?x <http://dbpedia.org/property/state> "+ state +" . "+
+							   "   ?x <http://dbpedia.org/property/name> ?name ." +
+				               " } ";		
+		System.out.println(queryString);
+		TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+    	  TupleQueryResult result = tupleQuery.evaluate();
+    	  try {
+//    		  BindingSet bindingSet;
+//  			  while(( bindingSet = result.next())!=null){
+//  					Value valueOfX = bindingSet.getValue("x");System.out.println(valueOfX.toString());
+//  					universities.add(valueOfX.toString());
+//  			  }
+    		  List<String> bindingNames = result.getBindingNames();
+    		  while (result.hasNext()) {
+    		     BindingSet bindingSet = result.next();
+    		     Value valueOfX = bindingSet.getValue(bindingNames.get(0));
+    		    // System.out.println(valueOfX.toString());
+    		     universities.add(valueOfX.toString());
+    		  }
+    	  }
+	  	  finally{
+	  	      result.close();
+	  	  }
+    	  return universities;
+	}
+
+	public static University getUniversityBean(String universityName, String givenState) throws RepositoryException, MalformedQueryException, QueryEvaluationException{
+		String name = new String();
+		if(givenState!=null)
+		 name = getUniversityWithState(universityName,givenState);
+		else
+			name = getUniversityWithName(universityName);
 		String URI;
 		String country;
 		String city;
