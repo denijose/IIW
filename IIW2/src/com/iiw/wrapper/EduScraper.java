@@ -26,7 +26,7 @@ import com.iiw.rdf.Manage;
 public class EduScraper {
 	
 	public void uniLister() throws IOException {
-		Document website = Jsoup.connect("http://www.edulix.com/unisearch/univreview.php").get();
+		Document website = Jsoup.connect("http://www.edulix.com/unisearch/univreview.php").timeout(0).get();
 		Elements dropdown = website.select("select[name=state]");
 		//System.out.println(dropdown);
 		Elements options = dropdown.select("option");
@@ -48,7 +48,7 @@ public class EduScraper {
 	}
 	
 	public void statePageParser(String url, String state) throws IOException {
-		Document website = Jsoup.connect(url).get();
+		Document website = Jsoup.connect(url).timeout(0).get();
 		Elements universities = website.select(".hov_line");
 		//System.out.println(universities);
 		for (Element currentUni : universities) {
@@ -64,7 +64,7 @@ public class EduScraper {
 		//Create the edulix University bean instance
 		University edulixUni = new University(url,name,"USA",null,state,false);
 		
-		Document website = Jsoup.connect(url).get();
+		Document website = Jsoup.connect(url).timeout(0).get();
     	//Elements selection = website.select("body");
     	Elements sections = website.select(".tdtable");
     	
@@ -173,7 +173,7 @@ public class EduScraper {
 		
 		String temp;
 		
-		Document website = Jsoup.connect(url).get();
+		Document website = Jsoup.connect(url).timeout(0).get();
 		Elements content = website.select("tr");
 		for (Element row: content) {
 			Elements td = row.select("td");

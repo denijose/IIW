@@ -108,7 +108,11 @@ public class Sparql {
 		String country;
 		String city;
 		String state;
-
+		
+		if ((name==null) || (name.equals(""))) {
+			System.out.println("Levenshtein Failed for "+universityName);
+			return null;
+		}
 		repo = new HTTPRepository(sesameServer, repositoryID);
 		repo.initialize();
 		RepositoryConnection con = repo.getConnection();
