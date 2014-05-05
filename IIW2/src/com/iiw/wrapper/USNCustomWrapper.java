@@ -18,7 +18,10 @@ import com.iiw.entities.*;
 import com.iiw.rdf.*;
 
 public class USNCustomWrapper {
-	public static HashMap<String, String> states = new HashMap<String, String>() {{
+	public static HashMap<String, String> states = new HashMap<String, String>();
+	 
+	public USNCustomWrapper() throws IOException {
+		// Set the dictionary
 		states.put("AL","Alabama");
 		states.put("AK","Alaska");
 		states.put("AB","Alberta");
@@ -90,9 +93,6 @@ public class USNCustomWrapper {
 		states.put("WI","Wisconsin");
 		states.put("WY","Wyoming");
 		states.put("YT","Yukon Territory");
-	}};
-	 
-	public USNCustomWrapper() throws IOException {
 			// Initialize all the categories and specialities
 			getOptions("http://grad-schools.usnews.rankingsandreviews.com/best-graduate-schools/search?spp=50&program=");
 	}
