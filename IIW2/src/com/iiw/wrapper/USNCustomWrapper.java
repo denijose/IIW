@@ -155,10 +155,10 @@ public class USNCustomWrapper {
 				//break;
 			}
 		} else {
-			wrapScienceAndArts(uri, false, cat, null);
+			/*wrapScienceAndArts(uri, false, cat, null);
 			for (Category c : subCats) {
 				wrapScienceAndArts(c.getURI(), true, cat, c);
-			}
+			}*/
 		}
 		
 	}

@@ -7,16 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <style type="text/css">
+
+.item{
+    background: #FFFFFF;    
+    height: 100% !important;
+    width:100%;
+    text-align: center !important
+}
+.slidepic{
+text-shadow: none !important;
+text-align: center !important;
+}
+.carousel-control.left, .carousel-control.right {
+    background-image: none !important;
+}
+
+
+</style>
     <link rel="shortcut icon" href="http://getbootstrap.com/assets/ico/favicon.ico">
-	<style type="text/css"> 
-     @font-face {   font-family: 'Glyphicons Halflings';   
-     src: url('../fonts/glyphicons-halflings-regular.eot');   
-     src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
-     url('../fonts/glyphicons-halflings-regular.woff') format('woff'),  
-     url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
-     url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg'); } 
-	</style>
-    <title>Higher Education Leverage Program</title>
+	
+	<title>Higher Education Leverage Program</title>
 
     <!-- Bootstrap core CSS -->
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -34,8 +49,155 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://getbootstrap.com/assets/js/docs.min.js"></script>    
+<script>
+  $(document).ready(function(){
+    $('.carousel').carousel();
+  });
+</script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
 
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Course');
+        data.addColumn('number', 'Fees');
+        data.addRows([
+          ['University of Utah (Eccles) - David Eccles School of Business', 85000],
+          ['Michigan State University (College of Osteopathic Medicine)', 82071],
+          ['Georgia State University (Robinson) - J. Mack Robinson College of Business', 72000],
+          ['University of South Carolina (Moore) - Darla Moore School of Business', 71580],
+          ['University of Illinois - College of Medicine', 71578]
+        ]);
+
+        // Set chart options
+        var options = {'title':'Costliest Courses in the United States',
+                       'width':1200,
+                       'height':600};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        
+        var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1CxZO1MNZZMdTzrkGG8htzFayeQiXFfhqU4oIWhxqzug/edit?usp=sharing');
+        query.send(handleQueryResponse);
+        
+        var query2 = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1VLNmVDDMtH1JQlSLcornS46TqMgHKuyCXKnKDpIGCX4/edit?usp=sharing');
+        query2.send(handleQueryResponse2);
+        
+      }
+      
+      function handleQueryResponse(response) {
+    	  if (response.isError()) {
+    	    alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+    	    return;
+    	  }
+    	  var options = {'title':'Costliest Courses in the United States',
+                  'width':1200,
+                  'height':600, colors: ['red'],
+                  'chartArea': {'width': '75%', 'height': '50%'},
+                   'vAxis':{'slantedText':'true','title':'Fees per Year in Dollars','baseline':0}, 'hAxis': {'slantedText':'true','textStyle':{'fontSize':9}}};
+
+    	  var data = response.getDataTable();
+    	  var chart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
+    	  chart.draw(data, options);
+    	}
+      
+      function handleQueryResponse2(response) {
+    	  if (response.isError()) {
+    	    alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+    	    return;
+    	  }
+    	  var options = {'title':'Cheapest Graduate Courses for Foreign Students',
+                  'width':1200,
+                  'height':600, colors: ['blue'],
+                  'chartArea': {'width': '75%', 'height': '50%'},
+                   'vAxis':{'slantedText':'true','title':'Fees per Year in Dollars','baseline':0}, 'hAxis': {'slantedText':'true','textStyle':{'fontSize':9}}};
+
+    	  var data = response.getDataTable();
+    	  var chart = new google.visualization.ColumnChart(document.getElementById('cheapchart'));
+    	  chart.draw(data, options);
+    	}
+    </script>
+    
+        <script type='text/javascript'>
+     google.load('visualization', '1', {'packages': ['geochart']});
+     google.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var data3 = google.visualization.arrayToDataTable([
+          ['State', 'Income'],
+          ['California',	762251762],
+          ['Michigan',	567882405],
+          ['Ohio',	424040180],
+          ['Texas',	387347141],
+          ['Virginia',	375496337],
+          ['Georgia',	371140942],
+          ['Florida',	320792976],
+          ['Arizona',	289925294],
+          ['Illinois',	281964211],
+          ['Indiana',	236969324],
+          ['Pennsylvania',	229250150],
+          ['North Carolina',	226468103],
+          ['Colorado',	216190574],
+          ['New Jersey',	215374258],
+          ['New York',	211599764],
+          ['Tennessee',	162211868],
+          ['South Carolina',	156745241],
+          ['Washington',	154867970],
+          ['Minnesota',	153645934],
+          ['Kentucky',	142927689],
+          ['Iowa',	135269721],
+          ['Maryland',	134849011],
+          ['Alabama',	129289802],
+          ['Wisconsin',	125242185],
+          ['Utah',	122300991],
+          ['West Virginia',	119830466],
+          ['Louisiana',	101591590],
+          ['Oregon',	95098266],
+          ['Connecticut',	86614322],
+          ['Missouri',	78044801],
+          ['Oklahoma',	73879823],
+          ['Kansas',	69661405],
+          ['New Mexico',	55029371],
+          ['Nebraska',	46557030],
+          ['Arkansas',	45023722],
+          ['Nevada',	37144465],
+          ['Massachusetts',	31954434],
+          ['Mississippi',	30645931],
+          ['Vermont',	28114848],
+          ['Hawaii',	27750504],
+          ['South Dakota',	19001166],
+          ['Idaho',	12512698],
+          ['Montana',	11166218],
+          ['Maine',	9961696],
+          ['New Hampshire',	8313600],
+          ['Delaware',	6522984],
+          ['North Dakota',	6115338],
+          ['District Of Columbia',	4022865],
+          ['Rhode Island',	2927144],
+          ['Wyoming',	1930632]
+        ]);
+
+        var options3 = {'region':'US','displayMode':'regions','resolution':'provinces','width':1200};
+
+        var chart3 = new google.visualization.GeoChart(document.getElementById('mapChart'));
+        chart3.draw(data3, options3);
+    };
+    </script>
     
   </head>
 
@@ -46,81 +208,6 @@
 
 
   <body role="document">
-      <script>
-  window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '631162070309479',
-    status     : true, // check login status
-    cookie     : true, // enable cookies to allow the server to access the session
-    xfbml      : true  // parse XFBML
-  });
-  FB.Event.subscribe('auth.authResponseChange', function(response) {
-    if (response.status === 'connected') {    	
-    	//document.location.href = '/IIW2/Form';       	
-  	  var id;
-	  var params = {};
-	  FB.api('/me', function(response) {	    
-		  
-	    	  params['userName'] = response.name; 
-		  	  params['email'] = response.email;
-		  	  id = response.id;
-		  	  var user = 'https://graph.facebook.com/' + id;
-		  	  params['userURI'] = user; 
-		  	  FB.api(user, function(response2) {				  
-			  	  params['firstName'] = response2.first_name; 
-			  	  params['lastName']= response2.last_name;		;
-			  	post_to_url('/IIW2/Form',params,'Post');
-		      });	
-	        }	  
-	   );	    	
-    	//post_to_url('/IIW2/Form',params,'Post');
-    } else if (response.status === 'not_authorized') {
-      FB.login();
-    } else {
-      FB.login();
-      document.location.href = '/IIW/Form';
-    }
-  });
-  };
-
-  // Load the SDK asynchronously
-     (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/all.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-
-  // Here we run a very simple test of the Graph API after login is successful. 
-  // This testAPI() function is only called in those cases. 
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Good to see you, ' + response.name + '.');
-    });
-  }
-  
-  function post_to_url(path, params, method) {
-	    method = method || "post"; // Set method to post by default if not specified.
-	    var form = document.createElement("form");
-	    form.setAttribute("method", method);
-	    form.setAttribute("action", path);
-
-	    for(var key in params) {
-	        if(params.hasOwnProperty(key)) {
-	            var hiddenField = document.createElement("input");
-	            hiddenField.setAttribute("type", "hidden");
-	            hiddenField.setAttribute("name", key);
-	            hiddenField.setAttribute("value", params[key]);
-	            form.appendChild(hiddenField);
-	         }
-	    }
-	    document.body.appendChild(form);
-	    form.submit();
-	}
-</script>
-
 
     <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -143,25 +230,53 @@
         <h1>Analytics</h1>
         <p>Aggregate Data</p>
         <p><fb:login-button show-faces="true" width="2000" max-rows="1"></fb:login-button></p>
+        <h4><a href="/IIW2/analytics.jsp"><span class="label label-success label-lg">< Back</span></a></h4>
       </div>
       </div> <!-- /container -->
-      <div class="container">
-      <h4><a href="/IIW2/analytics.jsp"><span class="label label-success label-lg">< Back</span></a></h4>
-      </div><br>
+    
 		<div class="container">
 		<div class="row">
-		<div class="col-md-6" style="text-align:center">
 		</div>
-		<div class="col-md-6" style="text-align:center">
+		
+<div class="bs-example">
+    <div id="myCarousel" class="carousel slide" data-interval="6000" data-ride="carousel">
+    	<!-- Carousel indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>   
+       <!-- Carousel items -->
+        <div class="carousel-inner">
+            <div class="active item">              
+<div class="row">
+		<div class="col-md-6 slidepic">
+		<div id="chart_div"></div>
 		</div>
 		</div>
-		</div>
+            </div>
+            <div class="item">
+        	<div class="col-md-6 slidepic">
+			<div id="columnchart"></div>
+			</div>
+		
+            </div>
+            <div class="item">
+            <div id="cheapchart"></div>
+            </div>
+        </div>
+        <!-- Carousel nav -->
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev"><  </a>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next">> </a>
+    </div>
+</div><br>
+<h2 style="text-align:center">Statewise Income from Foreign Engineering Graduate Students</h2>
+<div id="row"><div id="mapChart"></div></div>
+</div>
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="./dist/js/bootstrap.min.js"></script>
-    <script src="http://getbootstrap.com/assets/js/docs.min.js"></script>
   </body>
 </html>

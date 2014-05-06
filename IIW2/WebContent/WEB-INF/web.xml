@@ -59,4 +59,14 @@
     <servlet-name>Edulixer</servlet-name>
     <url-pattern>/Edulixer</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Analytix</display-name>
+    <servlet-name>Analytix</servlet-name>
+    <servlet-class>com.iiw.controller.Analytix</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Analytix</servlet-name>
+    <url-pattern>/Analytix</url-pattern>
+  </servlet-mapping>
 </web-app>
