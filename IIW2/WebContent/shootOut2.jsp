@@ -11,6 +11,57 @@
 
     <title>Higher Education Leverage Program</title>
 
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Status');
+        data.addColumn('number', 'Number of Students');
+        data.addRows([
+          ['Admits', 1189],
+          ['Rejects', 318]
+        ]);
+
+        // Set chart options
+        var options = {'title':'Percentage of Admits and Rejects at USC',
+                       'width':600,
+                       'height':400};
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div_usc'));
+        chart.draw(data, options);
+        
+        var data2 = new google.visualization.DataTable();
+        data2.addColumn('string','Status');
+        data2.addColumn('number','Number of Students');
+        data2.addRows([
+                       ['Admits',123],
+                       ['Rejects',331]
+                       ]);
+        
+        var options2 = {'title':'Percentage of Admits and Rejects at UCLA',
+                'width':600,
+                'height':400};
+        
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div_ucla'));
+        chart.draw(data2, options2);
+      }
+    </script>
+
+
+
     <!-- Bootstrap core CSS -->
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
@@ -60,6 +111,35 @@
     
     </script>
 
+
+    
+    
+    
+        <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawTable);
+      function drawTable() {
+        var data3 = new google.visualization.DataTable();
+        data3.addColumn('string', 'University');
+        data3.addColumn('number', 'Avg Quant Score');
+        data3.addColumn('number', 'Avg Verbal Score');
+        data3.addColumn('number', 'Avg Analytical Score');
+        data3.addColumn('number', 'Avg TOEFL Score');
+        data3.addColumn('number', 'Avg Undergrad Score');
+//        data3.addColumn('boolean', 'Full Time Employee');
+        data3.addRows([
+                       ['University of Southern California', 777.02, 557.02, 4.61, 117.7, 74.47],
+                       ['University of California Los Angeles', 797.09, 605.7, 3.8, 101.94, 74.5]
+        //  ['Mike',  {v: 10000, f: '$10,000'}, true],
+          
+        ]);
+
+        var table = new google.visualization.Table(document.getElementById('table_div'));
+        table.draw(data3, {showRowNumber: false});
+      }
+    </script>
+    
     
   </head>
 
@@ -81,7 +161,8 @@
             <li><a href="/IIW2/profile.jsp">My Account</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
-                      </ul>
+            
+          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
@@ -96,16 +177,35 @@
         <h4><a href="/IIW2/analytics.jsp"><span class="label label-success label-lg">< Back</span></a></h4>
         </div>
         
-      <form id="searchForm" action="/IIW2/shootOut2.jsp" >	 
+      	 
 			<div class="row">  
 			<div class="col-md-6" style="text-align:center"> <select id="shootOut1" style="width:80%"><option>Select University</option></select> </div>	
 			 <div class="col-md-6" style="text-align:center"> <select id="shootOut2" style="width:80%"><option>Select University</option></select> </div>
 			 </div><br><br>
-			 <div class="row" style="text-align:center" >
-			 <button class="btn btn-primary btn-lg" "onClick="window.location='/IIW2/shootOut2.jsp">Compare</button>
-			 </div>
+			 <div class="row" style="text-align:center">
+			 <button class="btn btn-primary btn-lg" onClick="window.location='/IIW2/shootOut2.jsp'">Compare</button>
+			 </div><br><br>
 			 
-	</form>  
+			 <div class="row">
+      	 <div class="col-md-6" style="text-align:center">
+			 <h3>Rank 20</h3>
+      	 </div>
+      	 <div class="col-md-6" style="text-align:center">
+			 <h3>Rank 13</h3>
+      	 </div>
+      	 </div>
+			 <div class="row">
+			 <div class="col-md-6" style="text-align:center">
+			 <div id="chart_div_usc"></div>
+			 </div>
+			 <div class="col-md-6" style="text-align:center">
+			 <div id="chart_div_ucla"></div>
+			 </div>
+			 </div>
+			 <div class="row">
+			 <h3>Average Scores of Admitted Students (Selectivity Measure)</h3><br>
+			 <div id="table_div"></div></div>
+	
 <br><br>
         
         

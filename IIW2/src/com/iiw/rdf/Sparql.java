@@ -66,7 +66,7 @@ public class Sparql {
 		String queryString  = "SELECT ?name WHERE " +
 				 		       " { ?x " + p + " " + o + "." +
 							   "   ?x <http://dbpedia.org/property/name> ?name ." +
-				               " } ";		
+				               " }";		
 		System.out.println(queryString);
 		TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
     	  TupleQueryResult result = tupleQuery.evaluate();

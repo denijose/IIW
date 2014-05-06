@@ -157,10 +157,10 @@
 
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+                        <li class="active"><a href="/IIW2/">Home</a></li>
+            <li><a href="/IIW2/profile.jsp">My Account</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="#contact">My Account</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -184,7 +184,7 @@
 			</br>
 			<div class="row"><div class="col-md-2"> Fees Range </div>  <div class="col-md-2"> <input id="F" type="number" class="form-control" placeholder="Fees Less Than"> </div> </div>		
 			<br>			 
-			<div class="row"> <div class="col-md-3"><button type="button" onclick="search()">Search</button></div> <div class="col-md-2"> ShootOut </div> <div class="col-md-2"> <select id="shootOut1"><option>Select University</option></select> </div></div><br>	 
+			<div class="row"> <div class="col-md-3"><button type="button" onclick="search()">Search</button></div> </div><br>	 
 </form>  
 <br><br>
 

@@ -2,6 +2,8 @@ package com.iiw.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,9 +57,12 @@ public class Form extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Gson gson = new Gson();
+		
 		universitySet =  removeQuotes(universitySet);
-		String universityJSON = gson.toJson(universitySet);
+		ArrayList<String> sorted = new ArrayList<String>(universitySet);
+		Collections.sort(sorted);
+		Gson gson = new Gson();
+		String universityJSON = gson.toJson(sorted);
 		RequestDispatcher rd = request.getRequestDispatcher("/shootOut.jsp");  
 		request.setAttribute("universitiesJSON", universityJSON);
         rd.forward(request, response);		

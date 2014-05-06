@@ -128,7 +128,8 @@
 
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="/IIW2/">Home</a></li>
+            <li><a href="/IIW2/profile.jsp">My Account</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>

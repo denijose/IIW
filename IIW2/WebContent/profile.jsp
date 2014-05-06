@@ -55,7 +55,8 @@
 
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="/IIW2/">Home</a></li>
+            <li><a href="/IIW2/profile.jsp">My Account</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -68,7 +69,7 @@
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <h1>Hello <%=request.getAttribute("name") %>!</h1>
-        <p>Fill your Profile Here YO!!.</p>
+        <p>Please complete your profile.</p>
 			        <form role="form" action="Profile">
 							  <div class="form-group">
 							    <label for="exampleInputEmail1">GRE Quantitative Score</label>
@@ -94,7 +95,7 @@
 										 </script>
 							  </div>
 							 <div class="form-group">
-							    <label for="exampleInputEmail1">Stream of your Choice</label>
+							    <label for="exampleInputEmail1">Graduate Stream of your Choice</label>
 							    <input type="text" class="form-control" id="stream" name="streamName" placeholder="Enter Stream of your Choice">
 							  </div>
 							  <input type="hidden" id="userURIHiddenFieldID" name="userURIHiddenFieldName"/>
