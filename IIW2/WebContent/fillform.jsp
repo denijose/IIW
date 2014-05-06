@@ -49,16 +49,17 @@
 			    {
 			    //alert(xmlhttp.responseText);
 				  var json = JSON.parse(xmlhttp.responseText);
-				  //alert(json.Details[0].Rank);
+				  //alert(json.table[0].U);
 				  showResults(json);
 			    }
 			  }
 			var country = document.getElementById("country").value;
+			var state = document.getElementById("state").value;
 			var select = document.getElementById("category");
-			var category = select.options[select.selectedIndex].value;
-			var fees = document.getElementById("feesRange");
-			var gre = document.getElementById("GREScore");
-			var URL = "SearchServlet?country=" + country +"&category=" +category + "&feesRange=" + fees + "&GREScoreRange=" + gre;
+			var category = select.options[select.selectedIndex].value;			
+			var q = document.getElementById("Q").value;var v = document.getElementById("V").value;var a = document.getElementById("A").value;var t = document.getElementById("T").value;var b = document.getElementById("B").value;
+			var f = document.getElementById("F").value;
+			var URL = "SearchServlet?country=" + country + "&state=" + state + "&category=" +category + "&Q=" + q + "&V=" + v + "&A=" + a + "&T=" + t + "&B=" + b + "&F=" + f;
 			xmlhttp.open("GET",URL,true);
 			xmlhttp.send();
 			}
@@ -66,18 +67,22 @@
 			function showResults(json){
 			     document.getElementById("tableDiv").innerHTML = "";
 				 var table = document.createElement('table');
+				 if(json.table.length==0)
+				    return;
 				 table.className = "table table-striped table-hover";
-				 table.innerHTML = "<tr><td>Rank</td><td>University</td><td>Details</td></tr>";
-				for(var i=0;i<json.Details.length;i++){		
-					 var rank =  json.Details[i].Rank;
-					 var University = json.Details[i].University;
-					 var hiddenDetails = document.createElement("INPUT");
-					 hiddenDetails.setAttribute("type","hidden");
-					 var details = University.name+","+University.state+","+University.city+","+University.numOfWaiting+","+University.numOfAdmits+","+University.numOfRejects+","+University.URI;
-					 hiddenDetails.setAttribute("value",details);
-					 hiddenDetails.setAttribute("id",i);
-					 document.body.appendChild(hiddenDetails);
-					 table.innerHTML += "<tr id=\""+i+"_row\" ><td>"+rank+"</td><td>"+University.name+ "<table id=\""+i+"_table\" style=\"display:none\"  class=\"table table-striped table-hover\"><tr><td>State: </td><td>"+ University.state +"</td></tr><tr><td>City: </td><td>"+ University.city +"</td></tr><tr><td>Waiting List No.: </td><td>"+ University.numOfWaiting +"</td></tr><tr><td>No. Of Admits: </td><td>"+ University.numOfAdmits +"</td></tr><tr><td>No. Of Rejects: </td><td>"+ University.numOfRejects +"</td></tr><tr><td>Link: </td><td>"+ University.URI +"</td></tr></table>" +"</td><td onClick='showDetails("+i+")'><img src='adsds'></td></tr>";				     
+				 table.innerHTML = "<tr><td></td><td></td><td></td> <td><button id='saveResultBtn' onClick=changeSaveResultBtn() type=\"button\" class=\"btn btn-info\">Save Results</button></td> <td><button id='postToFBBtn' onClick=changepostToFBBtn() type=\"button\" class=\"btn btn-info\">Post To FaceBook</button></td> </tr>";
+				 table.innerHTML += "<tr><td>Rank</td><td>University</td><td>Fees</td><td>Admittance Ratio</td> <td></td></tr>";
+				for(var i=0;i<json.table.length;i++){		
+					 var rank =  json.table[i].rank;
+					 var name = json.table[i].name;
+					 var University = json.table[i];
+					 //var hiddenDetails = document.createElement("INPUT");
+					 //hiddenDetails.setAttribute("type","hidden");
+					 //var details = University.country+","+University.state+","+University.city+","+University.admits+","+University.U;
+					 //hiddenDetails.setAttribute("value",details);
+					 //hiddenDetails.setAttribute("id",i);
+					 //document.body.appendChild(hiddenDetails);
+					 table.innerHTML += "<tr id=\""+i+"_row\" ><td>"+rank+"</td><td>"+name+ "<table id=\""+i+"_table\" style=\"display:none\"  class=\"table table-striped table-hover\"><tr><td>Country: </td><td>"+ University.country +"</td></tr><tr><td>State: </td><td>"+ University.state +"</td></tr><tr><td>City: </td><td>"+ University.city +"</td></tr><tr><td>No. Of Admits: </td><td>"+ University.admits +"</td></tr><tr><td><a href='/IIW2/123961.jsp'>More Info ... </a></td><td></td></tr></table>" +"</td><td>500</td><td>0.45</td><td onClick='showDetails("+i+")'>Plus</td></tr>";				     
 				}
 				//table.innerHTML += 
 				document.getElementById("tableDiv").appendChild(table);
@@ -87,7 +92,7 @@
 			//		alert('muhahah');
 			//}
 			
-			function addCategories()
+			function addCategoriesAndShootOut()
           {          
 				var json = '<%= request.getAttribute("categoryJSON")%>';
 				var categories = JSON.parse(json);
@@ -101,6 +106,20 @@
 	        			newOption.text = categories[i];
 	        		newOption.value = categories[i];	
 				}
+				
+				var json = '<%= request.getAttribute("universitiesJSON")%>';
+				var universities = JSON.parse(json);
+				var newOption = document.createElement("option");
+	            document.getElementById("shootOut1").options.add(newOption);
+	             newOption.text = "";
+	             newOption.value = "empty";	
+				for(var i=0;i<universities.length;i++){
+					var newOption = document.createElement("option");
+	              document.getElementById("shootOut1").options.add(newOption);
+	        			newOption.text = universities[i];
+	        		newOption.value = universities[i];	
+				}
+				
 	 		}
 				
            function showDetails(i){
@@ -110,6 +129,13 @@
            	  else 
            	      displayTable.style.display='none';
            	     
+           }
+           
+           function  changeSaveResultBtn(){
+           document.getElementById('saveResultBtn').innerHTML = "Results Saved";
+           }
+           
+           function changepostToFBBtn(){
            }
 		</script>
 
@@ -123,7 +149,7 @@
   present a graphical Login button that triggers the FB.login() function when clicked. -->
 
 
-  <body role="document" onload="addCategories();">
+  <body role="document" onload="addCategoriesAndShootOut();">
 
     <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -134,6 +160,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li><a href="#contact">My Account</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -146,21 +173,18 @@
       Welcome <%=request.getAttribute("name")%>
       <p> Start Searching <p>
       <form id="searchForm" action="/" >
-   		 	Select Country:   <select id="country" name ="country"></select>
+   		 	<div class="row"><div class="col-md-2">Select Country:  </div><div class="col-md-4"> <select id="country" name ="country"></select></div><div class="col-md-2">Select State:  </div><div class="col-md-4"><select name ="state" id ="state"></select>  </div></div> 
 					<script language="javascript">
-					populateCountries("country");
+					populateCountries("country","state");
 					 </script>
-					 <br>
-			GRE Score Range <select id="GREScore"> 
-							  <option value="1">290-300</option>
-							  <option value="2">290-300</option>
-							  <option value="3">290-300</option>
-							  <option value="4">290-300</option>
-					          </select><br>
-			Category <select id="category"></select><br>		
-			Fees Range 	<input id="feesRange" type="text" name="fees"><br>	<br>			 
-			<button type="button" onclick="search()">Searcho</button>		 
-			<input type="submit" value="Search">		 
+					 </br>
+			<div class="row"><div class="col-md-2"> Category </div> <div class="col-md-2"> <select id="category"><option>Computer Science</option></select><br> </div></div>
+			</br>
+			<div class="row"><div class="col-md-2"> Scores </div>  <div class="col-md-2"> <input id="Q" type="number" class="form-control" placeholder="Gre Quant"> </div>  <div class="col-md-2"> <input id="V" type="number" class="form-control" placeholder="Gre Verbal"> </div> <div class="col-md-2"> <input id="A" type="number" class="form-control" placeholder="GRE Analytics"> </div>  <div class="col-md-2"> <input id="T" type="number" class="form-control" placeholder="Toefl"> </div> <div class="col-md-2"> <input id="B" type="number" class="form-control" placeholder="UnderGrad Score"> </div></div>
+			</br>
+			<div class="row"><div class="col-md-2"> Fees Range </div>  <div class="col-md-2"> <input id="F" type="number" class="form-control" placeholder="Fees Less Than"> </div> </div>		
+			<br>			 
+			<div class="row"> <div class="col-md-3"><button type="button" onclick="search()">Search</button></div> <div class="col-md-2"> ShootOut </div> <div class="col-md-2"> <select id="shootOut1"><option>Select University</option></select> </div></div><br>	 
 </form>  
 <br><br>
 

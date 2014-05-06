@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.openrdf.query.MalformedQueryException;
 import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.repository.RepositoryException;
@@ -62,14 +63,29 @@ public class Form extends HttpServlet {
 		
 		//check if it is a first time user
 		User user = null;
-		if( (user=Sparql.getUser(userURI))==null){
-			//time to create the bugger muhahahha!!
-			RequestDispatcher rd = request.getRequestDispatcher("/profile.jsp");  
-			request.setAttribute("name",userName );
-			request.setAttribute("userURI",userURI );
-	        rd.forward(request, response);
-	        return;
+		try {
+			if( (user=Sparql.getUser(userURI))==null){
+				//time to create the bugger muhahahha!!
+				RequestDispatcher rd = request.getRequestDispatcher("/profile.jsp");  
+				request.setAttribute("name",userName );
+				request.setAttribute("userURI",userURI );
+			    rd.forward(request, response);
+			    return;
+			}
+		} catch (QueryEvaluationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (RepositoryException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (MalformedQueryException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		Gson gson = new Gson();
+		String userJSON = gson.toJson(user);
+		System.out.println(userJSON);
+		
 		
 //		try {
 //			Manage.createStudent(student);
@@ -90,13 +106,32 @@ public class Form extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Gson gson = new Gson();
+		
 		categorySet = removeQuotes(categorySet);
 		String categoryJSON = gson.toJson(categorySet);
 		System.out.println(categoryJSON);
+		
+		Set<String> universitySet = new HashSet<String>();
+		try {
+			universitySet = Sparql.getAllUniversities();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		universitySet =  removeQuotes(universitySet);
+		String universityJSON = gson.toJson(universitySet);
+		//System.out.println(universityJSON);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/fillform.jsp");  
 		request.setAttribute("name",userName );
 		request.setAttribute("categoryJSON", categoryJSON);
+		request.setAttribute("universitiesJSON", universityJSON);
         rd.forward(request, response);
 		
 	}

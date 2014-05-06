@@ -1,5 +1,7 @@
 package com.iiw.entities;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
 
 	private String userURI;

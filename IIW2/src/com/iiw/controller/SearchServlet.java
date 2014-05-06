@@ -41,15 +41,19 @@ public class SearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String country = request.getParameter("country");
+		String state = request.getParameter("state");
 		String category = request.getParameter("category");
-		String feesRange = request.getParameter("feesRange");
-		String GREScoreRange = request.getParameter("GREScoreRange");
-		//System.out.println(country);
-		//System.out.println(category);
+		String Q = request.getParameter("Q");
+		String V = request.getParameter("V");
+		String A = request.getParameter("A");
+		String T = request.getParameter("T");
+		String B = request.getParameter("B");
+		String F = request.getParameter("F");
+
         
 		String JSON = new String();
 		try {
-			JSON = search(country,category,feesRange,GREScoreRange);
+			JSON = Sparql.search(country, state, category, Q, V, A, T, B, F);
 		} catch (RepositoryException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -68,34 +72,35 @@ public class SearchServlet extends HttpServlet {
 		response.getWriter().write(JSON);
 	}
 
-	private String search(String country, String category, String feesRange, String GREScoreRange) throws RepositoryException, MalformedQueryException, QueryEvaluationException, JSONException {
-		
-		LinkedHashMap<University,String> details = Sparql.getUnivGivenCategory(category);
-		JSONObject JSONObject = new JSONObject();
-		JSONArray JSONArray = new JSONArray();
-		JSONObject.put("Details",JSONArray );
-		
-		
-		for(University u: details.keySet()){
-			//System.out.println(u.getName()+ " - " + details.get(u));
-			int secondPref = details.get(u).lastIndexOf("\"");
-			String rank = details.get(u).substring(1, secondPref);
-			JSONObject jsonU = new JSONObject(u);
-			//JSONObject jsonR = new JSONObject(rank);
-			//JSONObject jsonUniv = new JSONObject().put("University", jsonU);
-			//JSONObject jsonRank = new JSONObject().put("Rank", jsonR);
-			JSONObject jsonUR = new JSONObject();
-			jsonUR.put("University", jsonU);
-			jsonUR.put("Rank", rank);
-			JSONArray.put(jsonUR);
-		}
-		JSONObject.put("Details", JSONArray);
-//		Gson gson = new Gson();
-//		String JSON = gson.toJson(details); 
-//		System.out.println(JSON);
-//		return JSON;
-		System.out.println(JSONObject.toString());
-		return JSONObject.toString();
+	private String search(String country,String state, String category, String Q, String V, String A ,String T, String B,  String F) throws RepositoryException, MalformedQueryException, QueryEvaluationException, JSONException {
+		Sparql.search(country, state, category, Q, V, A, T, B, F);
+//		LinkedHashMap<University,String> details = Sparql.getUnivGivenCategory(category);
+//		JSONObject JSONObject = new JSONObject();
+//		JSONArray JSONArray = new JSONArray();
+//		JSONObject.put("Details",JSONArray );
+//		
+//		
+//		for(University u: details.keySet()){
+//			//System.out.println(u.getName()+ " - " + details.get(u));
+//			int secondPref = details.get(u).lastIndexOf("\"");
+//			String rank = details.get(u).substring(1, secondPref);
+//			JSONObject jsonU = new JSONObject(u);
+//			//JSONObject jsonR = new JSONObject(rank);
+//			//JSONObject jsonUniv = new JSONObject().put("University", jsonU);
+//			//JSONObject jsonRank = new JSONObject().put("Rank", jsonR);
+//			JSONObject jsonUR = new JSONObject();
+//			jsonUR.put("University", jsonU);
+//			jsonUR.put("Rank", rank);
+//			JSONArray.put(jsonUR);
+//		}
+//		JSONObject.put("Details", JSONArray);
+////		Gson gson = new Gson();
+////		String JSON = gson.toJson(details); 
+////		System.out.println(JSON);
+////		return JSON;
+//		System.out.println(JSONObject.toString());
+//		return JSONObject.toString();
+		return null;
 	}
 
 	/**

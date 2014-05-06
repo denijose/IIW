@@ -47,7 +47,7 @@ public class Manage {
 		ValueFactory f = repo.getValueFactory();
 		RepositoryConnection con = repo.getConnection();
 		URI ofType = f.createURI("http://example.org/ofType");
-		URI person = f.createURI("http://dbpedia.org/ontology/person");
+		URI person = f.createURI("http://dbpedia.org/ontology/faceBook");
 		URI userURI = f.createURI(user.getUserURI());
 		URI name = f.createURI("http://dbpedia.org/property/name");
 		URI GREQScore = f.createURI("http://example.org/GREQScore");
@@ -80,13 +80,9 @@ public class Manage {
 	    	Literal ToeflScoreLiteral = f.createLiteral(user.getUserToeflScore());	
 	    	con.add(userURI, ToeflScore, ToeflScoreLiteral);
 	    }
-	    if(user!= null ){
-	    	Literal ToeflScoreLiteral = f.createLiteral(user.getUserToeflScore());	
-	    	con.add(userURI, ToeflScore, ToeflScoreLiteral);
-	    }
 	    if(user.getUserCountry()!= null ){
-	    	Literal ToeflScoreLiteral = f.createLiteral(user.getUserToeflScore());	
-	    	con.add(userURI, ToeflScore, ToeflScoreLiteral);
+	    	Literal userCountryLiteral = f.createLiteral(user.getUserCountry());	
+	    	con.add(userURI, country, userCountryLiteral);
 	    }
 	    if(user.getUserStream()!= null ){
 	    	Literal userStreamLiteral = f.createLiteral(user.getUserStream());	
@@ -425,7 +421,7 @@ public class Manage {
 		    con.close();
 			
 		}
-	
+
 }
 
 	

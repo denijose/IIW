@@ -32,7 +32,7 @@ public class Profile extends HttpServlet {
 			
 		System.out.println(request.getParameter("GREQScoreName"));
 		String userURI = request.getParameter("userURIHiddenFieldName");
-		String userName = request.getParameter("userURIHiddenFieldName");
+		String userName = request.getParameter("userNameHiddenFieldName");
 		String GREQScore = request.getParameter("GREQScoreName");
 		String GREVScore = request.getParameter("GREVScoreName");
 		String GREAScore = request.getParameter("GREAScoreName");

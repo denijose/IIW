@@ -36,7 +36,7 @@
 		    document.getElementById('userNameHiddenFieldID').value = name;
 		}
 </script>
-    
+   <script type= "text/javascript" src = "countries.js"></script> 
   </head>
 
  
@@ -72,27 +72,30 @@
 			        <form role="form" action="Profile">
 							  <div class="form-group">
 							    <label for="exampleInputEmail1">GRE Quantitative Score</label>
-							    <input type="email" class="form-control" id="GREQScoreID" name="GREQScoreName" placeholder="Enter email">
+							    <input type="number" class="form-control" id="GREQScoreID" name="GREQScoreName" placeholder="Enter GRE Quantitative Score">
 							  </div>
 							  <div class="form-group">
 							    <label for="exampleInputEmail1">GRE Verbal Score</label>
-							    <input type="email" class="form-control" id="GREVScore" name="GREVScoreName" placeholder="Enter email">
+							    <input type="number" class="form-control" id="GREVScore" name="GREVScoreName" placeholder="Enter GRE Verbal Score">
 							  </div>
 							  <div class="form-group">
 							    <label for="exampleInputEmail1">GRE A Score</label>
-							    <input type="email" class="form-control" id="GREAScore" name="GREAScoreName" placeholder="Enter email">
+							    <input type="number" class="form-control" id="GREAScore" name="GREAScoreName" placeholder="Enter GRE A Score">
 							  </div>
 							  <div class="form-group">
 							    <label for="exampleInputEmail1">Toefl Score</label>
-							    <input type="email" class="form-control" id="ToeflScore" name="ToeflScoreName" placeholder="Enter email">
+							    <input type="number" class="form-control" id="ToeflScore" name="ToeflScoreName" placeholder="Enter Toefl Score">
 							  </div>
 							  <div class="form-group">
-							    <label for="exampleInputEmail1">Country of Your Choice</label>
-							    <input type="email" class="form-control" id="country" name="countryName" placeholder="Enter email">
+							    <label for="exampleInputEmail1">Country of Your Choice</label></br>
+						                <select id="country" name ="countryName"></select>
+										<script language="javascript">
+										populateCountries("country");
+										 </script>
 							  </div>
 							 <div class="form-group">
 							    <label for="exampleInputEmail1">Stream of your Choice</label>
-							    <input type="email" class="form-control" id="stream" name="streamName" placeholder="Enter email">
+							    <input type="text" class="form-control" id="stream" name="streamName" placeholder="Enter Stream of your Choice">
 							  </div>
 							  <input type="hidden" id="userURIHiddenFieldID" name="userURIHiddenFieldName"/>
 							   <input type="hidden" id="userNameHiddenFieldID" name="userNameHiddenFieldName"/>

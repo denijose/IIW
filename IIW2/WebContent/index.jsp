@@ -71,7 +71,7 @@
       FB.login();
     } else {
       FB.login();
-      document.location.href = '/IIW/Form';
+      document.location.href = '/IIW2/Form';
     }
   });
   };
