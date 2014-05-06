@@ -93,7 +93,7 @@ public class Sparql {
 		double jacDistance = (int) Float.NEGATIVE_INFINITY;
 		for( String univ : universities){
 			double distance;
-			if( (distance = Util.jaccardSimilarity(universityName, univ)) > jacDistance){
+			if( (distance = Util.jaroWinkler(universityName, univ)) > jacDistance){
 				jacDistance = distance;
 				university = univ;
 			}
@@ -109,13 +109,13 @@ public class Sparql {
 		double jacDistance = (int) Float.NEGATIVE_INFINITY;
 		for( String univ : universities){
 			double distance;
-			if( (distance = Util.jaccardSimilarity(universityName, univ)) > jacDistance){
+			if( (distance = Util.jaroWinkler(universityName, univ)) > jacDistance){
 				jacDistance = distance;
 				university = univ;
 			}
 		}
 			
-		System.out.println("selected by Jaccard - " + university);
+		System.out.println("Uniname - "+universityName+". Jaro Selection - " + university);
 		return university;
 	}
 	private static Set<String> getStateUniversities(String state) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
