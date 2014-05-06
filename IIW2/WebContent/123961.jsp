@@ -144,12 +144,109 @@ University of Southern California - Department of Chemistry	<br>
 		</div>
 		<div class="col-md-6" style="text-align:center">
 		<div id="chart_div"></div>
-  		
 		</div>
 		
+		<div class="col-md-12" style="text-align:justify">
+		<h2>Student Reviews:</h2><br>
+		<b>Aayuskh</b>:	I want to know my chances of getting the admit in this Uni.
+GRE- 1050 (Q- 720, V- 330, AWM- 3)
+TOEFL - 77
+<br><br>
+<b>Bunty</b>:	gre-1200, v-470,q-730
+undergraduation from srknec
+information technology- avg is 61%
+Want to pursue management of infomation systems.
+What are my chances?
+<br><br>
+<b>friendmaker</b>:	planning to apply for fall 2011
+gre 1320
+<br><br>
+<b>rahuljiresal</b>:	MS-SE
+<br><br>
+<b>kushal.mangtani</b>:	chaces of my admit
+<br><br>
+<b>zamwaraniket</b>:	Planning to apply for FaLL2011
+1120 GRE Score (Maths 780)AWM: 3.0
+TOEFL: 100/120
+GPA: 3.3
+Interested in MS for Computer Science or Computer Networks..
+Job experience of 10 months In Japan.
+Chances to get admit ?
+<br><br>
+<b>sagarbudavi</b>:	@khader : Thanks for this detail analysis....
+<br><br>
+<b>khader</b>:	As written by "sfx" of Edulix,
+
+Copyright: sfx's friend :)
+
+Expenses at USC
+
+MS students need to earn 27-33 credits (about 9-11 courses). Its 27 for EE and CS, i think!
+
+A 3 unit course, for example, is a 3hour / week course for a 15 week semster.
+Cost: $1129/unit.
+
+Mandatory fees $1200 p.a.
+Books $150/course.
+
+Now lets take an example of a student for MS CS ---> reqd units=27.
+
+A sample distribution of units for him -->
+Cost (Tution+Fees+Books)
+Year 1, Fall Semester = 6units 6674+600+300 = $7,674
+Year 1, Spring Semester = 9units 10161+600+450 = $11,211
+Year 2, Fall Semester = 9units 10161+600+450 = $11,211
+Year 2, Spring Semester = 3units 3389+600+450 = $4139
+
+Total for Year 1 = $18,885
+Total for Year 2 = $15,350
+
+Total program cost = $34,235
+
+Some facts:
+---------------
+1) On campus jobs available in plenty at USC costing $5-$20/hour (20hr/week)
+2) You can do off campus jobs after the first 9 months (20hr/week)
+3) You can do full time off campus jobs(internships) in summer semester (3-4 months). These jobs pay $3k-4k per month.
+4) If you have only one course(3 units) remaining in the last semester(Year 2 Spring) then you are allowed to work full time(internship)!!!!
+(I was not aware of this fact. Was any of you??)
+5) Most graduate students live off campus. Charges of living per month are $375-$450 per month on sharing basis. Its inclusive of all the expenses. (Source: FAQ at http://uscais.org/)
+6) Only 5% of MS students get aid.(Almost impossible!)
+
+My analysis:
+---------------
+Total program cost = $34,235
+Cost per year = $17,118
+Cost of Off campus housing = $5000-6000 p.a.
+(Includes rent, cost for groceries et al.)
+Earnings from an On campus job(which you will surely get unless you are really dumb) = $5000-$6000p.a. (By conservative estimates, Considering a job of only $5-6 per hour)
+Total cost of one year = 17k+6k = 23k
+Lets add some unforseen expenses of 2k.
+Total expenses = 25k p.a.
+Earnings from on campus job = 5k
+Total Amount required = 25k - 5k = 20k p.a.
+
+This is the total amount required if you stay off campus and you work on campus.
+
+Now you can work for about 7-8 months full time (summer+last semster)
+Lets say you could only work for about 3 months
+So, earnings @ 3k-4k per month = 10k
+But during this period you wont be doing any on campus job.
+So, total resultant earnings = 10k-1.5k=8.5k
+So, total cost for two years = 20k*2-8k=32k=Rs 14.1 lacs
+(Even if you skip the internship, the expenses are 40k = Rs 17.6 lacs )
+You can avail an education loan of Rs 20 lacs!!! :)
+
+Who the hell says USC is expensive!!!
+
+The above given amount is considering you live off campus, you earn a paltry sum of $5-6 per hour and you do internships for only 3 out of possible 7 months.
+
+Also i have included the costs of books required in the expenses. Most of us will bring the 'Eastern Economic Editions' of the books from India!(which costs one-tenth !! )
+
 		</div>
 		</div>
-<div class="chart_div"></div>
+		</div>
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
