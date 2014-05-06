@@ -55,7 +55,7 @@ public class EduScraper {
 			String uniURL = "http://www.edulix.com/unisearch/"+ currentUni.attr("href");
 			String uniName = currentUni.text();
 			// REMOVE to unleash
-			if (uniURL.contains("univid=153"))
+			//if (uniURL.contains("univid=135"))
 			uniPageParser(uniURL, uniName, state);
 		}
 	}
@@ -98,7 +98,7 @@ public class EduScraper {
     		String studURI = "http://www.edulix.com/unisearch/"+a.attr("href");
     		
     		// Remove to unleash
-    		//if (a.text().equals("aswinasar")) {
+    		//if (a.text().equals("Bat_Rastard")) {
     			System.out.println(studURI+" "+a.text());
     			currentStudent = studentPageParser(studURI, a.text());
     			acceptedStudents.add(currentStudent);
@@ -112,7 +112,7 @@ public class EduScraper {
     		Student currentStudent = new Student();
     		String studURI = "http://www.edulix.com/unisearch/"+r.attr("href");
     		//Remove to unleash
-    		//if (r.text().equals("joshi")) {
+    		//if (r.text().equals("deceptiveCadence")) {
     			System.out.println(studURI+" "+r.text());
     			currentStudent = studentPageParser(studURI, r.text());
     			rejectedStudents.add(currentStudent);
@@ -123,6 +123,7 @@ public class EduScraper {
     	Elements reviewers = reviews.select(".hov_line");
     	Elements contents = reviews.select(".tdborder");
     	
+    	if (sections.size() > 1){
     	System.out.println("No of Reviews : "+reviewers.size());
     	System.out.println("Reviews:");
     	StringBuilder reviewsString = new StringBuilder();
@@ -138,8 +139,9 @@ public class EduScraper {
     	}
     	
     	System.out.println("Reviews: "+reviewsString.toString());
-    	
     	edulixUni.setReviews(reviewsString.toString());
+    	}
+    	
     	/*Elements selection = website.select(".hov_line");
     	for (Element e : selection) {
     		System.out.println(e.attr("href")+", "+e.text()+", "+e);
@@ -156,7 +158,7 @@ public class EduScraper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	System.out.println(edulixUni.getAcceptedStudents().get(0).getDetails());
+    	//System.out.println(edulixUni.getAcceptedStudents().get(0).getDetails());
    
 	}
 	

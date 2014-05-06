@@ -265,12 +265,12 @@ public class USNCustomWrapper {
     		
     		try {
     			if (!subCategory) {
-    				//Manage.createUnivCourseConnections(university, course, cat, null, null);
+    				Manage.createUnivCourseConnections(university, course, cat, null, null);
     				System.out.println(university.getName()+"\t"+course.getName()+"\t"+cat.getURI());
     			}
     			else {
     				Course subCourse = new Course(schoolURI+courseURI+specialtyURI,subCat.getName(),rank,feeInOut[0],feeInOut[1],enrollments);
-    				//Manage.createUnivCourseConnections(university, course, cat, subCourse, subCat);
+    				Manage.createUnivCourseConnections(university, course, cat, subCourse, subCat);
     				System.out.println(university.getName()+"\t"+course.getName()+"\t"+cat.getURI()+"\t"+subCourse.getName()+"\t"+subCat.getURI());
     			}
     		} catch (Exception e) {

@@ -2,13 +2,15 @@ package com.iiw.util;
 
 import java.util.HashSet;
 
+import uk.ac.shef.wit.simmetrics.similaritymetrics.JaroWinkler;
+
 public class Util {
 
 	private static int minimum(int a, int b, int c) {
 		return Math.min(Math.min(a, b), c);
 	}
  
-	public static int computeLevenshteinDistance(String str1,String str2) {
+	public static int coputeLevenshteinDistance(String str1,String str2) {
 		int[][] distance = new int[str1.length() + 1][str2.length() + 1];
  
 		for (int i = 0; i <= str1.length(); i++)
@@ -27,7 +29,7 @@ public class Util {
 	}
 	
 	
-	public static double jaccardSimilarity(String similar1, String similar2){
+	public static double jacardSimilarity(String similar1, String similar2){
 		HashSet<String> h1 = new HashSet<String>();
 		HashSet<String> h2 = new HashSet<String>();
 		
@@ -57,5 +59,13 @@ public class Util {
 		
 		return (double)intersection/union;
 		
+	}
+	
+	public static double jaroWinkler(String string1, String string2) {
+		JaroWinkler jw = new JaroWinkler();
+		if (string2.length() > string1.length())
+		return jw.getSimilarity(string1, string2.substring(0, string1.length()));
+		else
+			return jw.getSimilarity(string1, string2);
 	}
 }
