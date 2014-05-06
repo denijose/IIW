@@ -100,7 +100,7 @@ public class Sparql {
 			}
 		}
 			
-		System.out.println("selected by Jaccard - " + university);
+		System.out.println("selected by Jaro - " + university);
 		return university;
 	}
 	
@@ -166,7 +166,7 @@ public class Sparql {
 		String state;
 		
 		if ((name==null) || (name.equals(""))) {
-			System.out.println("Jaccard Failed for "+universityName);
+			System.out.println("Jaro Failed for "+universityName);
 			return null;
 		}
 		repo = new HTTPRepository(sesameServer, repositoryID);

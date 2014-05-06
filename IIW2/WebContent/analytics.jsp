@@ -140,28 +140,22 @@
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>Hello, Admin!</h1>
-        <p>Welcome to the Administration Dashboard.</p>
+        <h1>Analytics</h1>
+        <p>Please select the type of analysis.</p>
         <p><fb:login-button show-faces="true" width="2000" max-rows="1"></fb:login-button></p>
       </div>
       </div> <!-- /container -->
+      <div class="container">
+      <h4><a href="/IIW2/"><span class="label label-success label-lg">< Back</span></a></h4>
+      </div><br>
 		<div class="container">
 		<div class="row">
 		<div class="col-md-6" style="text-align:center">
 		
-		<button class="btn btn-danger btn-lg btn-block" onClick="window.location='/IIW2/USNWrapper'">Refresh USNews Data</button>
+		<button class="btn btn-primary btn-lg btn-block" onClick="window.location='/IIW2/shootout.jsp'">University Shoot Out</button>
 		</div>
 		<div class="col-md-6" style="text-align:center">
-		<button class="btn btn-danger btn-lg btn-block" onClick="window.location='/IIW2/Edulixer'">Refresh Edulix Data</button>
-		</div>
-		</div><br>
-		<div class="row">
-		<div class="col-md-6" style="text-align:center">
-		
-		<button class="btn btn-primary btn-lg btn-block" onClick="window.location='/IIW2/fillform.jsp'">University Search</button>
-		</div>
-		<div class="col-md-6" style="text-align:center">
-		<button class="btn btn-primary btn-lg btn-block" onClick="window.location='/IIW2/analytics.jsp'">Analytics Page</button>
+		<button class="btn btn-primary btn-lg btn-block" onClick="window.location='/IIW2/aggregate.jsp'">Aggregate Data</button>
 		</div>
 		</div>
 		</div>
