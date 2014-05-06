@@ -82,7 +82,7 @@
 					 //hiddenDetails.setAttribute("value",details);
 					 //hiddenDetails.setAttribute("id",i);
 					 //document.body.appendChild(hiddenDetails);
-					 table.innerHTML += "<tr id=\""+i+"_row\" ><td>"+rank+"</td><td>"+name+ "<table id=\""+i+"_table\" style=\"display:none\"  class=\"table table-striped table-hover\"><tr><td>Country: </td><td>"+ University.country +"</td></tr><tr><td>State: </td><td>"+ University.state +"</td></tr><tr><td>City: </td><td>"+ University.city +"</td></tr><tr><td>No. Of Admits: </td><td>"+ University.admits +"</td></tr><tr><td><a href='/IIW2/123961.jsp'>More Info ... </a></td><td></td></tr></table>" +"</td><td>500</td><td>0.45</td><td onClick='showDetails("+i+")'>Plus</td></tr>";				     
+					 table.innerHTML += "<tr id=\""+i+"_row\" ><td>"+rank+"</td><td>"+name+ "<table id=\""+i+"_table\" style=\"display:none\"  class=\"table table-striped table-hover\"><tr><td>Country: </td><td>"+ University.country +"</td></tr><tr><td>State: </td><td>"+ University.state +"</td></tr><tr><td>City: </td><td>"+ University.city +"</td></tr><tr><td>No. Of Admits: </td><td>"+ University.admits +"</td></tr><tr><td><a href='/IIW2/123961.jsp'>More Info ... </a></td><td></td></tr></table>" +"</td><td>500</td><td>0.45</td><td onClick='showDetails("+i+")'>+</td></tr>";				     
 				}
 				//table.innerHTML += 
 				document.getElementById("tableDiv").appendChild(table);

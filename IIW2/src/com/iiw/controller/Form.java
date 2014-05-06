@@ -39,11 +39,28 @@ public class Form extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter pw = response.getWriter();
-		pw.write("heya!");
+//		PrintWriter pw = response.getWriter();
+//		pw.write("heya!");
 		
-		//RequestDispatcher rd = request.getRequestDispatcher("/fillform.jsp");  
-        //rd.forward(request, response);
+		Set<String> universitySet = new HashSet<String>();
+		try {
+			universitySet = Sparql.getAllUniversities();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		universitySet =  removeQuotes(universitySet);
+		String universityJSON = gson.toJson(universitySet);
+		RequestDispatcher rd = request.getRequestDispatcher("/shootOut.jsp");  
+		request.setAttribute("universitiesJSON", universityJSON);
+        rd.forward(request, response);		
 	}
 
 	/**
