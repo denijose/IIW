@@ -39,6 +39,62 @@ public class Manage {
 //	    con.close();
 	}
 	
+	
+	
+	public static void createLoginUser(User user) throws RepositoryException{
+		repo = new HTTPRepository(sesameServer, repositoryID);
+		repo.initialize();	
+		ValueFactory f = repo.getValueFactory();
+		RepositoryConnection con = repo.getConnection();
+		URI ofType = f.createURI("http://example.org/ofType");
+		URI person = f.createURI("http://dbpedia.org/ontology/person");
+		URI userURI = f.createURI(user.getUserURI());
+		URI name = f.createURI("http://dbpedia.org/property/name");
+		URI GREQScore = f.createURI("http://example.org/GREQScore");
+		URI GREVScore = f.createURI("http://example.org/GREVScore");
+		URI GREAScore = f.createURI("http://example.org/GREAScore");
+		URI ToeflScore = f.createURI("http://example.org/ToeflScore");
+		URI country = f.createURI("http://example.org/country");
+		URI stream = f.createURI("http://example.org/stream");
+		
+		//URI undergradScore = f.createURI("http://dbpedia.org/property/undergradScore");  // --> Replace age with undergradScore
+		//URI details = f.createURI("http://dbpedia.org/property/details");	
+		
+		Literal userName = f.createLiteral(user.getUserName());				
+		con.add(userURI, ofType, person);
+	    con.add(userURI, name, userName);	    
+	    
+	    if(user.getUserGREQScore()!=-1 ||user.getUserGREQScore()!= null ){
+	    	Literal GreQScoreLiteral = f.createLiteral(user.getUserGREQScore());	
+	    	con.add(userURI, GREQScore, GreQScoreLiteral);
+	    }
+	    if(user.getUserGREVScore()!=-1 || user.getUserGREVScore()!= null ){
+	    	Literal GreVScoreLiteral = f.createLiteral(user.getUserGREVScore());	
+	    	con.add(userURI, GREVScore, GreVScoreLiteral);
+	    }
+	    if(user.getUserGREAScore()!=-1 || user.getUserGREAScore()!= null ){
+	    	Literal GreAScoreLiteral = f.createLiteral(user.getUserGREAScore());	
+	    	con.add(userURI, GREAScore, GreAScoreLiteral);
+	    }
+	    if(user.getUserToeflScore()!=-1 || user.getUserToeflScore()!= null ){
+	    	Literal ToeflScoreLiteral = f.createLiteral(user.getUserToeflScore());	
+	    	con.add(userURI, ToeflScore, ToeflScoreLiteral);
+	    }
+	    if(user!= null ){
+	    	Literal ToeflScoreLiteral = f.createLiteral(user.getUserToeflScore());	
+	    	con.add(userURI, ToeflScore, ToeflScoreLiteral);
+	    }
+	    if(user.getUserCountry()!= null ){
+	    	Literal ToeflScoreLiteral = f.createLiteral(user.getUserToeflScore());	
+	    	con.add(userURI, ToeflScore, ToeflScoreLiteral);
+	    }
+	    if(user.getUserStream()!= null ){
+	    	Literal userStreamLiteral = f.createLiteral(user.getUserStream());	
+	    	con.add(userURI, stream, userStreamLiteral);
+	    }
+		con.close();		
+	}
+	
 	public static void create() throws RepositoryException{			
 		repo = new HTTPRepository(sesameServer, repositoryID);
 		repo.initialize();	

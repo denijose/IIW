@@ -19,6 +19,7 @@ import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.http.HTTPRepository;
 
 import com.iiw.entities.University;
+import com.iiw.entities.User;
 import com.iiw.util.Util;
 
 public class Sparql {
@@ -280,4 +281,11 @@ public class Sparql {
 	  	  }
 		return universityRankMap;
 	}
+
+	public static User getUser(String userURI) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }

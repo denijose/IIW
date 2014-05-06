@@ -75,9 +75,9 @@
 					 hiddenDetails.setAttribute("type","hidden");
 					 var details = University.name+","+University.state+","+University.city+","+University.numOfWaiting+","+University.numOfAdmits+","+University.numOfRejects+","+University.URI;
 					 hiddenDetails.setAttribute("value",details);
-					 hiddenDetails.setAttribute("id",University.URI);
+					 hiddenDetails.setAttribute("id",i);
 					 document.body.appendChild(hiddenDetails);
-					 table.innerHTML += "<tr><td>"+rank+"</td><td>"+University.name+"</td><td  onClick='showDetails("+University.URI+");'><img src='adsds'></td></tr>";				     
+					 table.innerHTML += "<tr id=\""+i+"_row\" ><td>"+rank+"</td><td>"+University.name+ "<table id=\""+i+"_table\" style=\"display:none\"  class=\"table table-striped table-hover\"><tr><td>State: </td><td>"+ University.state +"</td></tr><tr><td>City: </td><td>"+ University.city +"</td></tr><tr><td>Waiting List No.: </td><td>"+ University.numOfWaiting +"</td></tr><tr><td>No. Of Admits: </td><td>"+ University.numOfAdmits +"</td></tr><tr><td>No. Of Rejects: </td><td>"+ University.numOfRejects +"</td></tr><tr><td>Link: </td><td>"+ University.URI +"</td></tr></table>" +"</td><td onClick='showDetails("+i+")'><img src='adsds'></td></tr>";				     
 				}
 				//table.innerHTML += 
 				document.getElementById("tableDiv").appendChild(table);
@@ -103,8 +103,13 @@
 				}
 	 		}
 				
-           function showDetails(University){           	
-           	alert(document.getElementById("u").value);
+           function showDetails(i){
+           	  displayTable = document.getElementById(i+"_table");
+           	  if(displayTable.style.display=='none')
+           	      displayTable.style.display='block';
+           	  else 
+           	      displayTable.style.display='none';
+           	     
            }
 		</script>
 

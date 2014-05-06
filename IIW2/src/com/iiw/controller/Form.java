@@ -59,9 +59,18 @@ public class Form extends HttpServlet {
 		System.out.println(firstName);
 		System.out.println(lastName);
 		System.out.println(email);
-		Student student = new Student();
-		student.setName(userName);
-		student.setURI(userURI);
+		
+		//check if it is a first time user
+		User user = null;
+		if( (user=Sparql.getUser(userURI))==null){
+			//time to create the bugger muhahahha!!
+			RequestDispatcher rd = request.getRequestDispatcher("/profile.jsp");  
+			request.setAttribute("name",userName );
+			request.setAttribute("userURI",userURI );
+	        rd.forward(request, response);
+	        return;
+		}
+		
 //		try {
 //			Manage.createStudent(student);
 //		} catch (RepositoryException e) {
