@@ -110,7 +110,8 @@ public class Sparql {
 		double jacDistance = (int) Float.NEGATIVE_INFINITY;
 		for( String univ : universities){
 			double distance;
-			if( (distance = Util.jaroWinkler(universityName, univ)) > jacDistance){
+			distance = Util.jaroWinkler(universityName, univ);
+			if( distance > jacDistance){
 				jacDistance = distance;
 				university = univ;
 			}

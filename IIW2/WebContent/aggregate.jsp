@@ -73,23 +73,20 @@ text-align: center !important;
 
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Course');
-        data.addColumn('number', 'Fees');
+        data.addColumn('string', 'Status');
+        data.addColumn('number', 'Number of Students');
         data.addRows([
-          ['University of Utah (Eccles) - David Eccles School of Business', 85000],
-          ['Michigan State University (College of Osteopathic Medicine)', 82071],
-          ['Georgia State University (Robinson) - J. Mack Robinson College of Business', 72000],
-          ['University of South Carolina (Moore) - Darla Moore School of Business', 71580],
-          ['University of Illinois - College of Medicine', 71578]
+          ['Admits', 91068],
+          ['Rejects', 78856]
         ]);
 
         // Set chart options
-        var options = {'title':'Costliest Courses in the United States',
+        var options = {'title':'Total Graduate Admits and Rejects in the United States',
                        'width':1200,
                        'height':600};
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
         
         var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1CxZO1MNZZMdTzrkGG8htzFayeQiXFfhqU4oIWhxqzug/edit?usp=sharing');

@@ -42,8 +42,10 @@ public class EduScraper {
 			String stateURL = "http://www.edulix.com/unisearch/univreview.php?v=1&stid="+value;
 			//System.out.println(value+"\t"+state);
 			// REMOVE to unleash
-			if (value==36)
+			if (value>1 && value<3000){
+				System.out.println(value);
 			statePageParser(stateURL, state);
+			}
 		}
 	}
 	
@@ -68,6 +70,8 @@ public class EduScraper {
     	//Elements selection = website.select("body");
     	Elements sections = website.select(".tdtable");
     	
+    	if (!(sections.size()>0))
+    		return;
     	// TODO - Validation
     	Element students = sections.get(0);
     	Elements waitingList = students.select(".hov_line");
@@ -91,7 +95,7 @@ public class EduScraper {
     	//System.out.println("Applied:");
     	//System.out.println(students.select(".hov_line"));
     	// No point in using the statistics of students who applied. Let's rather focus on the students who got admits and rejects.
-    	System.out.println("Admits:");
+    	//System.out.println("Admits:");
     	// <a class="admit" href="user.php?uid=140692">appu05</a>
     	for (Element a : admits) {
     		Student currentStudent = new Student();
@@ -99,23 +103,23 @@ public class EduScraper {
     		
     		// Remove to unleash
     		//if (a.text().equals("Bat_Rastard")) {
-    			System.out.println(studURI+" "+a.text());
-    			currentStudent = studentPageParser(studURI, a.text());
-    			acceptedStudents.add(currentStudent);
+    			//System.out.println(studURI+" "+a.text());
+    			//currentStudent = studentPageParser(studURI, a.text());
+    			//acceptedStudents.add(currentStudent);
     		//}
     	}
     	edulixUni.setAcceptedStudents(acceptedStudents);
     	
-    	System.out.println("Rejects:");
+    	//System.out.println("Rejects:");
     	// <a class="reject" href="user.php?uid=131912">51cent</a>
     	for (Element r : rejects) {
     		Student currentStudent = new Student();
     		String studURI = "http://www.edulix.com/unisearch/"+r.attr("href");
     		//Remove to unleash
     		//if (r.text().equals("deceptiveCadence")) {
-    			System.out.println(studURI+" "+r.text());
-    			currentStudent = studentPageParser(studURI, r.text());
-    			rejectedStudents.add(currentStudent);
+    			//System.out.println(studURI+" "+r.text());
+    			//currentStudent = studentPageParser(studURI, r.text());
+    			//rejectedStudents.add(currentStudent);
     		//}
     	}
     	edulixUni.setRejectedStudents(rejectedStudents);
