@@ -203,11 +203,21 @@ public class USNCustomWrapper {
     	//Pattern pattern = Pattern.compile("(\\d+),(\\d+)");
     	Pattern pattern = Pattern.compile("\\$(\\d+,*\\d+)");
     	Matcher matcher;
-
+    	String schoolID = new String();
+		String schoolIDPattern = ".*-(\\d*)";
+		Pattern r = Pattern.compile(schoolIDPattern);
     	for (int i = 0; i < column0.size(); i++) {
     		
     		feeInOut[0] = feeInOut[1] = -1;
-    		schoolURI = "http://grad-schools.usnews.rankingsandreviews.com"+column0.get(i).select(".schoolname").attr("href");
+    		//schoolURI = "http://grad-schools.usnews.rankingsandreviews.com"+column0.get(i).select(".schoolname").attr("href");
+    		schoolID = column0.get(i).select(".schoolname").attr("href");
+    		Matcher schoolIDm = r.matcher(schoolID);
+    		if (schoolIDm.find()) {
+    		schoolURI = "http://example.com/gradSchoolID/"+schoolIDm.group(1);
+    		} else {
+    			schoolURI = "http://example.com/gradSchoolID/unknown";
+    		}
+    			
     		schoolName = column0.get(i).select(".schoolname").text();
         	location = column0.get(i).select(".citystate").text();
         	cityState = location.split(", ");  // splitting city and state
@@ -294,9 +304,20 @@ public class USNCustomWrapper {
 		rows.remove(0);
 		String schoolURI,schoolName,location,rankString = "";
 		int rank;
+    	String schoolID = new String();
+		String schoolIDPattern = ".*-(\\d*)";
+		Pattern r = Pattern.compile(schoolIDPattern);
 		for (Element row : rows) {
 			Element uni = row.select("td").first();
-			schoolURI = "http://grad-schools.usnews.rankingsandreviews.com"+uni.select(".schoolname").attr("href");
+			//schoolURI = "http://grad-schools.usnews.rankingsandreviews.com"+uni.select(".schoolname").attr("href");
+			schoolID = uni.select(".schoolname").attr("href");
+    		Matcher schoolIDm = r.matcher(schoolID);
+    		if (schoolIDm.find()) {
+    		schoolURI = "http://example.com/gradSchoolID/"+schoolIDm.group(1);
+    		} else {
+    			schoolURI = "http://example.com/gradSchoolID/unknown";
+    		}
+    		
 			schoolName = uni.select(".schoolname").text();
 			location = uni.select(".citystate").text();
 			String cityState[] = location.split(", ");

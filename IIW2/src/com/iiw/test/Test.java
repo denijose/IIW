@@ -2,6 +2,8 @@ package com.iiw.test;
 
 import java.io.IOException;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openrdf.query.MalformedQueryException;
 import org.openrdf.query.QueryEvaluationException;
@@ -32,6 +34,14 @@ public class Test {
 		System.out.println(Util.jaccardSimilarity("University of Southern California", "University of Southern Calipornia"));
 		
 		System.out.println(multiline);
+		
+		String schoolID = "best-graduate-schools/top-public-affairs-schools/university-of-southern-california-price-123961";
+		String pattern = ".*-(\\d*)";
+		Pattern r = Pattern.compile(pattern);
+		Matcher m = r.matcher(schoolID);
+		if (m.find()) {
+			System.out.println(m.group(1));
+		}
 	}
 
 }
