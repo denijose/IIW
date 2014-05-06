@@ -127,7 +127,7 @@ public class Sparql {
 		String o = "<http://dbpedia.org/ontology/EducationalInstitution>";
 		String queryString  = "SELECT ?name WHERE " +
 				 		       " { ?x " + p + " " + o + "." +
-				 		       "   ?x <http://dbpedia.org/property/state> "+ state +" . "+
+				 		       "   ?x <http://dbpedia.org/property/state> \""+ state +"\" . "+
 							   "   ?x <http://dbpedia.org/property/name> ?name ." +
 				               " } ";		
 		System.out.println(queryString);
