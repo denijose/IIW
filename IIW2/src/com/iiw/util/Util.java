@@ -10,7 +10,7 @@ public class Util {
 		return Math.min(Math.min(a, b), c);
 	}
  
-	public static int coputeLevenshteinDistance(String str1,String str2) {
+	public static int computeLevenshteinDistance(String str1,String str2) {
 		int[][] distance = new int[str1.length() + 1][str2.length() + 1];
  
 		for (int i = 0; i <= str1.length(); i++)
@@ -29,7 +29,7 @@ public class Util {
 	}
 	
 	
-	public static double jacardSimilarity(String similar1, String similar2){
+	public static double jaccardSimilarity(String similar1, String similar2){
 		HashSet<String> h1 = new HashSet<String>();
 		HashSet<String> h2 = new HashSet<String>();
 		

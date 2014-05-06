@@ -8,7 +8,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="http://getbootstrap.com/assets/ico/favicon.ico">
-
+	<style type="text/css"> 
+     @font-face {   font-family: 'Glyphicons Halflings';   
+     src: url('../fonts/glyphicons-halflings-regular.eot');   
+     src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
+     url('../fonts/glyphicons-halflings-regular.woff') format('woff'),  
+     url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
+     url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg'); } 
+	</style>
     <title>Higher Education Leverage Program</title>
 
     <!-- Bootstrap core CSS -->
@@ -138,7 +145,26 @@
         <p><fb:login-button show-faces="true" width="2000" max-rows="1"></fb:login-button></p>
       </div>
       </div> <!-- /container -->
-
+		<div class="container">
+		<div class="row">
+		<div class="col-md-6" style="text-align:center">
+		
+		<button class="btn btn-danger btn-lg btn-block" onClick="window.location='/IIW2/USNWrapper'">Refresh USNews Data</button>
+		</div>
+		<div class="col-md-6" style="text-align:center">
+		<button class="btn btn-danger btn-lg btn-block" onClick="window.location='/IIW2/Edulixer'">Refresh Edulix Data</button>
+		</div>
+		</div><br>
+		<div class="row">
+		<div class="col-md-6" style="text-align:center">
+		
+		<button class="btn btn-primary btn-lg btn-block" onClick="window.location='/IIW2/fillform.jsp'">University Search</button>
+		</div>
+		<div class="col-md-6" style="text-align:center">
+		<button class="btn btn-primary btn-lg btn-block" onClick="window.location='/IIW2/analytics.jsp'">Analytics Page</button>
+		</div>
+		</div>
+		</div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
