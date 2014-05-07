@@ -62,7 +62,7 @@
 		  	  FB.api(user, function(response2) {				  
 			  	  params['firstName'] = response2.first_name; 
 			  	  params['lastName']= response2.last_name;		;
-			  	post_to_url('/IIW2/Form',params,'Post');
+			  	post_to_url('/IIW2/user.jsp',params,'Post');
 		      });	
 	        }	  
 	   );	    	

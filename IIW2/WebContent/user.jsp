@@ -46,13 +46,14 @@
 
 
   <body role="document">
+
     <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
 
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-                <li class="active"><a href="/IIW2/">Home</a></li>
+            <li class="active"><a href="/IIW2/">Home</a></li>
             <li><a href="/IIW2/profile.jsp">My Account</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -65,20 +66,19 @@
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>Analytics</h1>
-        <p>Please select the type of analysis.</p>
+        <h1>Hello, User!</h1>
+        <p>Welcome to HELP. Please select one of the options below.</p>
         <p><fb:login-button show-faces="true" width="2000" max-rows="1"></fb:login-button></p>
-        <h4><a href="/IIW2/admin.jsp"><span class="label label-success label-lg">< Back</span></a></h4>
       </div>
       </div> <!-- /container -->
-      <div class="container">
+		<div class="container">
 		<div class="row">
 		<div class="col-md-6" style="text-align:center">
 		
-		<button class="btn btn-primary btn-lg btn-block" onClick="window.location='/IIW2/Form?action=shootOut'">University Shoot Out</button>
+		<button class="btn btn-primary btn-lg btn-block" onClick="window.location='/IIW2/Form?action=search'">University Search</button>
 		</div>
 		<div class="col-md-6" style="text-align:center">
-		<button class="btn btn-primary btn-lg btn-block" onClick="window.location='/IIW2/aggregate.jsp'">Aggregate Data</button>
+		<button class="btn btn-primary btn-lg btn-block" onClick="window.location='/IIW2/analytics.jsp'">Analytics Page</button>
 		</div>
 		</div>
 		</div>

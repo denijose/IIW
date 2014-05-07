@@ -43,6 +43,33 @@ public class Form extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		PrintWriter pw = response.getWriter();
 //		pw.write("heya!");
+
+		RequestDispatcher rd = null;
+		if (request.getParameter("action").equals("search"))
+			rd = request.getRequestDispatcher("/fillform.jsp");
+		else if(request.getParameter("action").equals("shootOut"))
+			rd = request.getRequestDispatcher("/shootOut.jsp");
+		
+		
+		
+		Set<String> categorySet = new HashSet<String>();
+		try {
+			categorySet = Sparql.getAllCategories();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		categorySet = removeQuotes(categorySet);
+		String categoryJSON = gson.toJson(categorySet);
+		System.out.println(categoryJSON);
+		
 		
 		Set<String> universitySet = new HashSet<String>();
 		try {
@@ -56,15 +83,15 @@ public class Form extends HttpServlet {
 		} catch (QueryEvaluationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
 		universitySet =  removeQuotes(universitySet);
 		ArrayList<String> sorted = new ArrayList<String>(universitySet);
 		Collections.sort(sorted);
-		Gson gson = new Gson();
+		gson = new Gson();
 		String universityJSON = gson.toJson(sorted);
-		RequestDispatcher rd = request.getRequestDispatcher("/shootOut.jsp");  
+		
 		request.setAttribute("universitiesJSON", universityJSON);
+		request.setAttribute("categoryJSON", categoryJSON);		
         rd.forward(request, response);		
 	}
 
@@ -87,7 +114,11 @@ public class Form extends HttpServlet {
 		if(userName.contains("swin")){
 			request.getRequestDispatcher("/admin.jsp").forward(request, response);
 			return;
+		} else if (userName.contains("enis")){
+			request.getRequestDispatcher("/user.jsp").forward(request, response);
+			return;
 		}
+		System.out.println(userName + "Coming from Landing Page");
 		//check if it is a first time user
 		User user = null;
 		try {
