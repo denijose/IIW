@@ -69,4 +69,14 @@
     <servlet-name>Analytix</servlet-name>
     <url-pattern>/Analytix</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Profile</display-name>
+    <servlet-name>Profile</servlet-name>
+    <servlet-class>com.iiw.controller.Profile</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Profile</servlet-name>
+    <url-pattern>/Profile</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -170,8 +170,8 @@
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
-      Welcome <%=request.getAttribute("name")%>
-      <p> Start Searching <p>
+      Uni Search Page
+      <p> Fill up the form below and start searching <p>
       <form id="searchForm" action="/" >
    		 	<div class="row"><div class="col-md-2">Select Country:  </div><div class="col-md-4"> <select id="country" name ="country"></select></div><div class="col-md-2">Select State:  </div><div class="col-md-4"><select name ="state" id ="state"></select>  </div></div> 
 					<script language="javascript">

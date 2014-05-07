@@ -68,7 +68,7 @@
         <h1>Analytics</h1>
         <p>Please select the type of analysis.</p>
         <p><fb:login-button show-faces="true" width="2000" max-rows="1"></fb:login-button></p>
-        <h4><a href="/IIW2/"><span class="label label-success label-lg">< Back</span></a></h4>
+        <h4><a href="/IIW2/admin.jsp"><span class="label label-success label-lg">< Back</span></a></h4>
       </div>
       </div> <!-- /container -->
       <div class="container">
