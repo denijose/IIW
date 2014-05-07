@@ -70,7 +70,7 @@
       <div class="jumbotron">
         <h1>Hello <%=request.getAttribute("name") %>!</h1>
         <p>Please complete your profile.</p>
-			        <form role="form" action="Profile">
+			        <form role="form" action="/IIW2/Profile">
 							  <div class="form-group">
 							    <label for="exampleInputEmail1">GRE Quantitative Score</label>
 							    <input type="number" class="form-control" id="GREQScoreID" name="GREQScoreName" placeholder="Enter GRE Quantitative Score">
