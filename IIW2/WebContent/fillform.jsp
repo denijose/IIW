@@ -73,16 +73,17 @@
 				 table.innerHTML = "<tr><td></td><td></td><td></td> <td><button id='saveResultBtn' onClick=changeSaveResultBtn() type=\"button\" class=\"btn btn-info\">Save Results</button></td> <td><button id='postToFBBtn' onClick=changepostToFBBtn() type=\"button\" class=\"btn btn-info\">Post To FaceBook</button></td> </tr>";
 				 table.innerHTML += "<tr><td>Rank</td><td>University</td><td>Fees</td><td>Admittance Ratio</td> <td></td></tr>";
 				for(var i=0;i<json.table.length;i++){		
-					 var rank =  json.table[i].rank;
-					 var name = json.table[i].name;
+					 var rank =  json.table[i].rank; rank = rank.substring(1,rank.lastIndexOf("\""));
+					 var name = json.table[i].name; name = name.substring(1,name.lastIndexOf("\""));
 					 var University = json.table[i];
-					 //var hiddenDetails = document.createElement("INPUT");
-					 //hiddenDetails.setAttribute("type","hidden");
-					 //var details = University.country+","+University.state+","+University.city+","+University.admits+","+University.U;
-					 //hiddenDetails.setAttribute("value",details);
-					 //hiddenDetails.setAttribute("id",i);
-					 //document.body.appendChild(hiddenDetails);
-					 table.innerHTML += "<tr id=\""+i+"_row\" ><td>"+rank+"</td><td>"+name+ "<table id=\""+i+"_table\" style=\"display:none\"  class=\"table table-striped table-hover\"><tr><td>Country: </td><td>"+ University.country +"</td></tr><tr><td>State: </td><td>"+ University.state +"</td></tr><tr><td>City: </td><td>"+ University.city +"</td></tr><tr><td>No. Of Admits: </td><td>"+ University.admits +"</td></tr><tr><td><a href='/IIW2/123961.jsp'>More Info ... </a></td><td></td></tr></table>" +"</td><td>500</td><td>0.45</td><td onClick='showDetails("+i+")'>+</td></tr>";				     
+                     var q = University.q; q=q.substring(1,q.lastIndexOf("\""));q=Math.floor(Number(q)).toString();
+                     var a = University.a; a=a.substring(1,a.lastIndexOf("\""));a=Math.floor(Number(a)).toString();
+                     var v = University.v; v=v.substring(1,v.lastIndexOf("\""));v=Math.floor(Number(v)).toString();
+                     var t = University.t; t=t.substring(1,t.lastIndexOf("\""));t=Math.floor(Number(t)).toString();
+                     var b = University.b; b=b.substring(1,b.lastIndexOf("\""));b=Math.floor(Number(b)).toString();
+					 fees = (Math.random()*10000000).toString();fees = fees.substring(0,4);
+					 ar = (Math.random()).toString();ar = ar.substring(0,4);
+					 table.innerHTML += "<tr id=\""+i+"_row\" ><td>"+rank+"</td><td>"+name+ "<table id=\""+i+"_table\" style=\"display:none\"  class=\"table table-striped table-hover\"><tr><td>Country: </td><td>"+ University.country +"</td></tr><tr><td>State: </td><td>"+ University.state +"</td></tr><tr><td>City: </td><td>"+ University.city +"</td></tr><tr><td>No. Of Admits: </td><td>"+ University.admits +"</td></tr><tr><td>Average GRE Q Score: </td><td>"+ q +"</td></tr><tr><td>Average GRE V Score: </td><td>"+ v +"</td></tr> <tr><td>Average GRE A Score: </td><td>"+ a +"</td></tr> <tr><td>Average Toefl Score: </td><td>"+ t +"</td></tr> <tr><td>Average UnderGrad Score: </td><td>"+ b +"</td></tr>   <tr><td><a href='/IIW2/123961.jsp'>More Info ... </a></td><td></td></tr></table>" +"</td><td>"+fees+"</td><td>"+ ar +"</td><td onClick='showDetails("+i+")'>+</td></tr>";				     
 				}
 				//table.innerHTML += 
 				document.getElementById("tableDiv").appendChild(table);
