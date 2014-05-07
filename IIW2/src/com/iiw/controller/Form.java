@@ -83,6 +83,11 @@ public class Form extends HttpServlet {
 		System.out.println(lastName);
 		System.out.println(email);
 		
+		//check for admin user
+		if(userName.contains("swin")){
+			request.getRequestDispatcher("/admin.jsp").forward(request, response);
+			return;
+		}
 		//check if it is a first time user
 		User user = null;
 		try {
